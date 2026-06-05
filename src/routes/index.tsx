@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { LE_NOUVEAU_TAXI_COMPLETE_DB, ALL_LESSONS } from "@/lib/taxi-data";
-import { LessonModal } from "@/components/duo/LessonModal";
+import { UNITS, ALL_MODULES } from "@/lib/taxi-data";
+import { ModuleModal } from "@/components/duo/ModuleModal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,36 +19,30 @@ function Index() {
   const [hearts, setHearts] = useState(5);
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(1);
-  const [completed, setCompleted] = useState<number[]>([]);
-  const [activeLessonId, setActiveLessonId] = useState<number | null>(null);
+  const [completed, setCompleted] = useState<string[]>([]);
+  const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const isUnlocked = (lessonId: number) => {
-    // All lessons unlocked for now
-    void lessonId;
-    return true;
-  };
-
-  const activeLesson = ALL_LESSONS.find((l) => l.lessonId === activeLessonId) || null;
+  const activeModule = ALL_MODULES.find((m) => m.id === activeModuleId) || null;
 
   const handleLoseHeart = () => {
     setHearts((h) => {
       const next = h - 1;
       if (next <= 0) {
         setGameOver(true);
-        setActiveLessonId(null);
+        setActiveModuleId(null);
       }
       return Math.max(0, next);
     });
   };
 
   const handleComplete = () => {
-    if (activeLesson && !completed.includes(activeLesson.lessonId)) {
-      setCompleted((c) => [...c, activeLesson.lessonId]);
+    if (activeModule && !completed.includes(activeModule.id)) {
+      setCompleted((c) => [...c, activeModule.id]);
       setXp((x) => x + 10);
       setStreak((s) => s + 1);
     }
-    setActiveLessonId(null);
+    setActiveModuleId(null);
   };
 
   const resetGame = () => {
@@ -56,15 +50,32 @@ function Index() {
     setGameOver(false);
   };
 
+  // Color hint per module type
+  const moduleTone = (type: string) => {
+    switch (type) {
+      case "dialogue":
+        return "bg-primary text-primary-foreground border-primary shadow-[0_6px_0_var(--primary-shadow)]";
+      case "vocab":
+        return "bg-xp text-background border-xp shadow-[0_6px_0_var(--border)]";
+      case "grammar":
+        return "bg-accent text-accent-foreground border-accent shadow-[0_6px_0_var(--border)]";
+      case "phrases":
+        return "bg-streak text-background border-streak shadow-[0_6px_0_var(--border)]";
+      case "quiz":
+        return "bg-heart text-background border-heart shadow-[0_6px_0_var(--border)]";
+      default:
+        return "bg-card text-foreground border-border shadow-[0_6px_0_var(--border)]";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-accent/30 via-background to-primary/10 flex items-center justify-center p-0 md:p-6">
-      {/* Phone frame on desktop */}
       <div className="w-full md:max-w-md md:rounded-[3rem] md:border-[12px] md:border-foreground/90 md:shadow-2xl md:overflow-hidden bg-background min-h-screen md:min-h-0 md:h-[860px] flex flex-col relative">
         {/* HUD */}
         <header className="sticky top-0 z-20 bg-background/90 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <span className="text-xl">🇫🇷</span>
-            <span className="font-extrabold text-foreground tracking-tight">Taxi</span>
+            <span className="font-extrabold text-foreground tracking-tight">Taxi Lingo</span>
           </div>
           <div className="flex items-center gap-3 text-sm font-extrabold">
             <span className="flex items-center gap-1 text-streak">🔥<span>{streak}</span></span>
@@ -75,55 +86,84 @@ function Index() {
 
         {/* Path */}
         <main className="flex-1 overflow-y-auto px-4 py-6">
-          {LE_NOUVEAU_TAXI_COMPLETE_DB.map((unit) => (
-            <section key={unit.unitId} className="mb-8">
+          {UNITS.map((unit) => (
+            <section key={unit.unitId} className="mb-10">
+              {/* Unit banner */}
               <div className="bg-primary text-primary-foreground rounded-2xl px-4 py-3 mb-6 shadow-[0_4px_0_var(--primary-shadow)]">
                 <p className="text-[10px] uppercase tracking-widest opacity-80">Unité {unit.unitId}</p>
-                <h2 className="font-extrabold text-lg">{unit.unitTitle.split(":")[1]?.trim() ?? unit.unitTitle}</h2>
+                <h2 className="font-extrabold text-lg">{unit.unitTitle}</h2>
               </div>
-              <div className="flex flex-col items-center gap-5">
-                {unit.lessons.map((lesson, i) => {
-                  const unlocked = isUnlocked(lesson.lessonId);
-                  const done = completed.includes(lesson.lessonId);
-                  const offset = [0, 60, 30, -30, -60, -30, 0][i % 7];
-                  return (
-                    <div
-                      key={lesson.lessonId}
-                      style={{ transform: `translateX(${offset}px)` }}
-                      className="flex flex-col items-center"
-                    >
-                      <button
-                        disabled={!unlocked}
-                        onClick={() => setActiveLessonId(lesson.lessonId)}
-                        className={`relative w-20 h-20 rounded-full font-extrabold text-2xl flex items-center justify-center border-4 transition-all ${
-                          done
-                            ? "bg-accent text-accent-foreground border-accent shadow-[0_6px_0_var(--border)]"
-                            : unlocked
-                            ? "bg-primary text-primary-foreground border-primary shadow-[0_6px_0_var(--primary-shadow)] active:translate-y-1 active:shadow-[0_0_0_var(--primary-shadow)]"
-                            : "bg-muted text-muted-foreground border-border shadow-[0_4px_0_var(--border)] cursor-not-allowed"
+
+              {unit.lessons.map((lesson) => {
+                const lessonDone = lesson.modules.every((m) => completed.includes(m.id));
+                return (
+                  <div key={lesson.lessonId} className="mb-8">
+                    {/* Lesson section header */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div
+                        className={`w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-sm ${
+                          lessonDone
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-foreground"
                         }`}
                       >
-                        {done ? "★" : unlocked ? lesson.lessonId : "🔒"}
-                      </button>
-                      <p className={`mt-2 text-xs font-bold text-center max-w-32 ${unlocked ? "text-foreground" : "text-muted-foreground"}`}>
-                        {lesson.lessonTitle.replace(/^Leçon \d+ : /, "")}
-                      </p>
+                        {lesson.lessonId}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
+                          Leçon {lesson.lessonId}
+                        </p>
+                        <h3 className="font-extrabold text-foreground leading-tight">
+                          {lesson.lessonTitle}
+                        </h3>
+                        <p className="text-xs text-muted-foreground">{lesson.theme}</p>
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
+
+                    {/* Module nodes */}
+                    <div className="flex flex-col items-center gap-4">
+                      {lesson.modules.map((mod, i) => {
+                        const done = completed.includes(mod.id);
+                        const offset = [0, 50, 25, -25, -50][i % 5];
+                        return (
+                          <div
+                            key={mod.id}
+                            style={{ transform: `translateX(${offset}px)` }}
+                            className="flex flex-col items-center"
+                          >
+                            <button
+                              onClick={() => setActiveModuleId(mod.id)}
+                              className={`relative w-20 h-20 rounded-full font-extrabold text-2xl flex items-center justify-center border-4 transition-all active:translate-y-1 ${
+                                done
+                                  ? "bg-accent text-accent-foreground border-accent shadow-[0_6px_0_var(--border)]"
+                                  : moduleTone(mod.type)
+                              }`}
+                              title={mod.title}
+                            >
+                              {done ? "★" : mod.icon}
+                            </button>
+                            <p className="mt-2 text-xs font-bold text-center max-w-32 text-foreground">
+                              {mod.title}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
             </section>
           ))}
           <div className="text-center text-muted-foreground text-xs pt-4 pb-8">
-            🎓 Inspired by <em>Le Nouveau Taxi 1</em>
+            🎓 Inspired by <em>Le Nouveau Taxi 1</em> — Units 1–3
           </div>
         </main>
 
-        {activeLesson && (
-          <LessonModal
-            lesson={activeLesson}
+        {activeModule && (
+          <ModuleModal
+            module={activeModule}
             hearts={hearts}
-            onClose={() => setActiveLessonId(null)}
+            onClose={() => setActiveModuleId(null)}
             onLoseHeart={handleLoseHeart}
             onComplete={handleComplete}
           />

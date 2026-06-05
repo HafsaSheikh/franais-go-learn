@@ -10,6 +10,14 @@ function speak(text: string) {
   window.speechSynthesis.speak(u);
 }
 
+const normalize = (s: string) =>
+  s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "'")
+    .trim()
+    .toLowerCase();
+
 type Stage = "dialogue" | "flashcards" | "grammar" | "quiz" | "complete";
 const STAGES: Stage[] = ["dialogue", "flashcards", "grammar", "quiz"];
 
@@ -227,10 +235,10 @@ function QuizView({
     } else if (challenge.type === "fill-blank") {
       ok =
         typeof answer === "string" &&
-        answer.trim().toLowerCase() === challenge.blank.toLowerCase();
+        normalize(answer) === normalize(challenge.blank);
       correctStr = challenge.blank;
     } else {
-      const a = answer as string[];
+      const a = (answer as string[]).map((s) => s.split("::")[0]);
       ok =
         a.length === challenge.correctOrder.length &&
         a.every((t, i) => t === challenge.correctOrder[i]);
@@ -309,10 +317,10 @@ function QuizView({
         {result ? (
           <button
             onClick={onNext}
-            className={`w-full font-extrabold uppercase tracking-wide py-4 rounded-2xl shadow-[0_4px_0_var(--primary-shadow)] active:translate-y-1 active:shadow-[0_0_0_var(--primary-shadow)] transition-all ${
+            className={`w-full font-extrabold uppercase tracking-wide py-4 rounded-2xl active:translate-y-1 transition-all ${
               result.ok
-                ? "bg-primary text-primary-foreground"
-                : "bg-destructive text-destructive-foreground"
+                ? "bg-primary text-primary-foreground shadow-[0_4px_0_var(--primary-shadow)] active:shadow-[0_0_0_var(--primary-shadow)]"
+                : "bg-destructive text-destructive-foreground shadow-[0_4px_0_var(--destructive-shadow)] active:shadow-[0_0_0_var(--destructive-shadow)]"
             }`}
           >
             Continue

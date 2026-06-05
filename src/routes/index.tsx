@@ -24,10 +24,9 @@ function Index() {
   const [gameOver, setGameOver] = useState(false);
 
   const isUnlocked = (lessonId: number) => {
-    const idx = ALL_LESSONS.findIndex((l) => l.lessonId === lessonId);
-    if (idx === 0) return true;
-    const prev = ALL_LESSONS[idx - 1];
-    return completed.includes(prev.lessonId);
+    // All lessons unlocked for now
+    void lessonId;
+    return true;
   };
 
   const activeLesson = ALL_LESSONS.find((l) => l.lessonId === activeLessonId) || null;

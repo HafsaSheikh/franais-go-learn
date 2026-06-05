@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { Challenge, Lesson } from "@/lib/taxi-data";
+import type { Challenge, LessonModule } from "@/lib/taxi-data";
 
 function speak(text: string) {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
@@ -14,44 +14,35 @@ const normalize = (s: string) =>
   s
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[’']/g, "'")
+    .replace(/[''`]/g, "'")
     .trim()
     .toLowerCase();
 
-type Stage = "dialogue" | "flashcards" | "grammar" | "quiz" | "complete";
-const STAGES: Stage[] = ["dialogue", "flashcards", "grammar", "quiz"];
-
 interface Props {
-  lesson: Lesson;
+  module: LessonModule;
   hearts: number;
   onClose: () => void;
   onLoseHeart: () => void;
   onComplete: () => void;
 }
 
-export function LessonModal({ lesson, hearts, onClose, onLoseHeart, onComplete }: Props) {
-  const [stage, setStage] = useState<Stage>("dialogue");
-  const stageIndex = STAGES.indexOf(stage);
-  const [quizIdx, setQuizIdx] = useState(0);
-  const totalSteps = STAGES.length + lesson.challenges.length - 1;
-  const currentStepNum =
-    stage === "quiz" ? STAGES.length - 1 + quizIdx : stageIndex;
-  const progressPct = ((currentStepNum + 1) / totalSteps) * 100;
+export function ModuleModal({ module, hearts, onClose, onLoseHeart, onComplete }: Props) {
+  // build a linear sequence of "screens" per module type
+  const screens = useMemo(() => buildScreens(module), [module]);
+  const [idx, setIdx] = useState(0);
+  const total = screens.length;
+  const progress = ((idx + 1) / total) * 100;
 
   const advance = () => {
-    if (stage === "quiz") {
-      if (quizIdx + 1 < lesson.challenges.length) setQuizIdx(quizIdx + 1);
-      else setStage("complete");
-    } else {
-      const next = STAGES[stageIndex + 1];
-      if (next) setStage(next);
-    }
+    if (idx + 1 < total) setIdx(idx + 1);
+    else onComplete();
   };
+
+  const current = screens[idx];
 
   return (
     <div className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
       <div className="relative w-full max-w-md bg-background flex flex-col animate-[slide-in-right_0.3s_ease-out]">
-        {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-border">
           <button
             onClick={onClose}
@@ -63,7 +54,7 @@ export function LessonModal({ lesson, hearts, onClose, onLoseHeart, onComplete }
           <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden">
             <div
               className="h-full bg-primary rounded-full transition-all duration-500"
-              style={{ width: `${progressPct}%` }}
+              style={{ width: `${progress}%` }}
             />
           </div>
           <div className="flex items-center gap-1 font-bold text-heart">
@@ -72,27 +63,65 @@ export function LessonModal({ lesson, hearts, onClose, onLoseHeart, onComplete }
           </div>
         </div>
 
-        {/* Body */}
         <div className="flex-1 overflow-y-auto p-5">
-          {stage === "dialogue" && <DialogueView lesson={lesson} onNext={advance} />}
-          {stage === "flashcards" && <FlashcardsView lesson={lesson} onNext={advance} />}
-          {stage === "grammar" && <GrammarView lesson={lesson} onNext={advance} />}
-          {stage === "quiz" && (
-            <QuizView
-              key={quizIdx}
-              challenge={lesson.challenges[quizIdx]}
+          {current.kind === "dialogue" && (
+            <DialogueScreen lines={current.lines} culture={current.culture} onNext={advance} />
+          )}
+          {current.kind === "vocab" && (
+            <VocabScreen pairs={current.pairs} onNext={advance} />
+          )}
+          {current.kind === "grammar" && (
+            <GrammarScreen blocks={current.blocks} onNext={advance} />
+          )}
+          {current.kind === "phrases" && (
+            <PhrasesScreen pairs={current.pairs} onNext={advance} />
+          )}
+          {current.kind === "quiz" && (
+            <QuizScreen
+              key={idx}
+              challenge={current.challenge}
               onLoseHeart={onLoseHeart}
               onNext={advance}
             />
           )}
-          {stage === "complete" && <CompleteView onDone={onComplete} />}
+          {current.kind === "complete" && <CompleteScreen onDone={advance} title={module.title} />}
         </div>
       </div>
     </div>
   );
 }
 
-function StepHeader({ kicker, title }: { kicker: string; title: string }) {
+// ----- Screen builder -----
+type Screen =
+  | { kind: "dialogue"; lines: NonNullable<LessonModule["dialogue"]>; culture?: string }
+  | { kind: "vocab"; pairs: NonNullable<LessonModule["vocabulary"]> }
+  | { kind: "grammar"; blocks: NonNullable<LessonModule["grammar"]> }
+  | { kind: "phrases"; pairs: NonNullable<LessonModule["phrases"]> }
+  | { kind: "quiz"; challenge: Challenge }
+  | { kind: "complete" };
+
+function buildScreens(m: LessonModule): Screen[] {
+  const s: Screen[] = [];
+  if (m.type === "dialogue" && m.dialogue) {
+    s.push({ kind: "dialogue", lines: m.dialogue, culture: m.culture });
+  }
+  if (m.type === "vocab" && m.vocabulary) {
+    s.push({ kind: "vocab", pairs: m.vocabulary });
+  }
+  if (m.type === "grammar" && m.grammar) {
+    s.push({ kind: "grammar", blocks: m.grammar });
+  }
+  if (m.type === "phrases" && m.phrases) {
+    s.push({ kind: "phrases", pairs: m.phrases });
+  }
+  if (m.exercises && m.exercises.length > 0) {
+    m.exercises.forEach((c) => s.push({ kind: "quiz", challenge: c }));
+  }
+  s.push({ kind: "complete" });
+  return s;
+}
+
+function Header({ kicker, title }: { kicker: string; title: string }) {
   return (
     <div className="mb-5">
       <p className="text-xs uppercase tracking-wider text-primary font-bold">{kicker}</p>
@@ -101,7 +130,7 @@ function StepHeader({ kicker, title }: { kicker: string; title: string }) {
   );
 }
 
-function NextButton({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) {
+function NextBtn({ onClick, label = "Continue" }: { onClick: () => void; label?: string }) {
   return (
     <button
       onClick={onClick}
@@ -112,14 +141,22 @@ function NextButton({ onClick, label = "Continue" }: { onClick: () => void; labe
   );
 }
 
-function DialogueView({ lesson, onNext }: { lesson: Lesson; onNext: () => void }) {
+function DialogueScreen({
+  lines,
+  culture,
+  onNext,
+}: {
+  lines: NonNullable<LessonModule["dialogue"]>;
+  culture?: string;
+  onNext: () => void;
+}) {
   const [revealed, setRevealed] = useState<Record<number, boolean>>({});
   return (
     <div>
-      <StepHeader kicker="Dialogue" title={lesson.lessonTitle} />
-      <p className="text-sm text-muted-foreground mb-4">Tap any line to reveal the translation. 🔊 plays audio.</p>
+      <Header kicker="Dialogue" title="Listen & read" />
+      <p className="text-sm text-muted-foreground mb-4">Tap a line to reveal the translation. 🔊 plays audio.</p>
       <div className="space-y-3">
-        {lesson.dialogue.map((line, i) => (
+        {lines.map((line, i) => (
           <div key={i} className="bg-card border-2 border-border rounded-2xl p-3 shadow-sm">
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs font-bold text-primary">{line.speaker}</span>
@@ -129,38 +166,44 @@ function DialogueView({ lesson, onNext }: { lesson: Lesson; onNext: () => void }
                   speak(line.fr);
                 }}
                 className="text-lg w-8 h-8 rounded-full bg-muted hover:bg-accent flex items-center justify-center"
-                aria-label="Play audio"
               >
                 🔊
               </button>
             </div>
-            <button
-              onClick={() => setRevealed((r) => ({ ...r, [i]: !r[i] }))}
-              className="w-full text-left"
-            >
+            <button onClick={() => setRevealed((r) => ({ ...r, [i]: !r[i] }))} className="w-full text-left">
               <p className="text-foreground font-medium">{line.fr}</p>
               {revealed[i] && (
-                <p className="text-muted-foreground text-sm mt-1 italic animate-fade-in">
-                  {line.en}
-                </p>
+                <p className="text-muted-foreground text-sm mt-1 italic animate-fade-in">{line.en}</p>
               )}
             </button>
           </div>
         ))}
       </div>
-      <NextButton onClick={onNext} />
+      {culture && (
+        <div className="mt-5 bg-accent/30 border border-accent rounded-2xl p-4">
+          <p className="text-xs uppercase tracking-wider text-accent-foreground font-bold mb-1">Culture note</p>
+          <p className="text-sm text-foreground">{culture}</p>
+        </div>
+      )}
+      <NextBtn onClick={onNext} />
     </div>
   );
 }
 
-function FlashcardsView({ lesson, onNext }: { lesson: Lesson; onNext: () => void }) {
+function VocabScreen({
+  pairs,
+  onNext,
+}: {
+  pairs: NonNullable<LessonModule["vocabulary"]>;
+  onNext: () => void;
+}) {
   const [flipped, setFlipped] = useState<Record<number, boolean>>({});
   return (
     <div>
-      <StepHeader kicker="Flashcards" title="New vocabulary" />
-      <p className="text-sm text-muted-foreground mb-4">Tap a card to flip. 🔊 to hear it.</p>
+      <Header kicker="Vocabulary" title="Tap to flip" />
+      <p className="text-sm text-muted-foreground mb-4">{pairs.length} words to learn.</p>
       <div className="grid grid-cols-2 gap-3">
-        {lesson.vocabulary.map((w, i) => {
+        {pairs.map((w, i) => {
           const f = flipped[i];
           return (
             <button
@@ -170,7 +213,7 @@ function FlashcardsView({ lesson, onNext }: { lesson: Lesson; onNext: () => void
                 f ? "bg-accent border-accent text-accent-foreground" : "bg-card border-border"
               }`}
             >
-              <p className="font-extrabold text-base">{f ? w.en : w.fr}</p>
+              <p className="font-extrabold text-sm">{f ? w.en : w.fr}</p>
               <span
                 role="button"
                 onClick={(e) => {
@@ -185,34 +228,73 @@ function FlashcardsView({ lesson, onNext }: { lesson: Lesson; onNext: () => void
           );
         })}
       </div>
-      <NextButton onClick={onNext} />
+      <NextBtn onClick={onNext} label="Start practice" />
     </div>
   );
 }
 
-function GrammarView({ lesson, onNext }: { lesson: Lesson; onNext: () => void }) {
+function GrammarScreen({
+  blocks,
+  onNext,
+}: {
+  blocks: NonNullable<LessonModule["grammar"]>;
+  onNext: () => void;
+}) {
   return (
     <div>
-      <StepHeader kicker="Grammar spotlight" title={lesson.grammar.title} />
-      <div className="bg-accent/40 border-2 border-accent rounded-2xl p-4">
-        <p className="text-foreground">{lesson.grammar.explanation}</p>
-        <ul className="mt-4 space-y-2">
-          {lesson.grammar.rules.map((r, i) => (
-            <li
-              key={i}
-              className="bg-card border border-border rounded-xl p-3 font-mono text-sm"
-            >
-              {r}
-            </li>
-          ))}
-        </ul>
+      <Header kicker="Grammar" title="Spotlight" />
+      <div className="space-y-4">
+        {blocks.map((g, i) => (
+          <div key={i} className="bg-accent/40 border-2 border-accent rounded-2xl p-4">
+            <h3 className="font-extrabold text-foreground mb-1">{g.title}</h3>
+            <p className="text-foreground text-sm">{g.explanation}</p>
+            <ul className="mt-3 space-y-2">
+              {g.rules.map((r, j) => (
+                <li key={j} className="bg-card border border-border rounded-xl p-3 font-mono text-xs">
+                  {r}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      <NextButton onClick={onNext} label="Start quiz" />
+      <NextBtn onClick={onNext} label="Start practice" />
     </div>
   );
 }
 
-function QuizView({
+function PhrasesScreen({
+  pairs,
+  onNext,
+}: {
+  pairs: NonNullable<LessonModule["phrases"]>;
+  onNext: () => void;
+}) {
+  return (
+    <div>
+      <Header kicker="Key phrases" title="Useful expressions" />
+      <div className="space-y-3">
+        {pairs.map((p, i) => (
+          <div key={i} className="bg-card border-2 border-border rounded-2xl p-3 flex items-center justify-between">
+            <div className="flex-1">
+              <p className="font-bold text-foreground">{p.fr}</p>
+              <p className="text-sm text-muted-foreground">{p.en}</p>
+            </div>
+            <button
+              onClick={() => speak(p.fr)}
+              className="text-lg w-9 h-9 rounded-full bg-muted hover:bg-accent flex items-center justify-center"
+            >
+              🔊
+            </button>
+          </div>
+        ))}
+      </div>
+      <NextBtn onClick={onNext} label="Start practice" />
+    </div>
+  );
+}
+
+function QuizScreen({
   challenge,
   onLoseHeart,
   onNext,
@@ -233,9 +315,7 @@ function QuizView({
       ok = answer === challenge.correct;
       correctStr = challenge.correct;
     } else if (challenge.type === "fill-blank") {
-      ok =
-        typeof answer === "string" &&
-        normalize(answer) === normalize(challenge.blank);
+      ok = typeof answer === "string" && normalize(answer) === normalize(challenge.blank);
       correctStr = challenge.blank;
     } else {
       const a = (answer as string[]).map((s) => s.split("::")[0]);
@@ -250,7 +330,7 @@ function QuizView({
 
   return (
     <div className="pb-32">
-      <StepHeader kicker="Quiz" title={challenge.question} />
+      <Header kicker="Practice" title={challenge.question} />
 
       {challenge.type === "multiple-choice" && (
         <div className="space-y-3">
@@ -262,9 +342,7 @@ function QuizView({
                 disabled={!!result}
                 onClick={() => setAnswer(opt)}
                 className={`w-full text-left p-4 rounded-2xl border-2 font-semibold transition-all shadow-[0_3px_0_var(--border)] active:translate-y-0.5 active:shadow-none ${
-                  sel
-                    ? "border-primary bg-primary/10 text-foreground"
-                    : "border-border bg-card"
+                  sel ? "border-primary bg-primary/10 text-foreground" : "border-border bg-card"
                 }`}
               >
                 {opt}
@@ -294,19 +372,14 @@ function QuizView({
         />
       )}
 
-      {/* Footer validation slate */}
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md p-4 bg-background border-t border-border">
         {result ? (
           <div
             className={`rounded-2xl p-4 mb-3 ${
-              result.ok
-                ? "bg-primary/15 text-primary"
-                : "bg-destructive/15 text-destructive"
+              result.ok ? "bg-primary/15 text-primary" : "bg-destructive/15 text-destructive"
             }`}
           >
-            <p className="font-extrabold">
-              {result.ok ? "✓ Excellent !" : "✗ Pas tout à fait"}
-            </p>
+            <p className="font-extrabold">{result.ok ? "✓ Excellent !" : "✗ Pas tout à fait"}</p>
             {!result.ok && (
               <p className="text-sm mt-1 text-foreground">
                 Correct answer: <span className="font-bold">{result.correct}</span>
@@ -353,22 +426,14 @@ function WordBank({
   disabled: boolean;
   onChange: (n: string[]) => void;
 }) {
-  // each token instance is uniquely indexed
   const tokenList = useMemo(() => tokens.map((t, i) => ({ t, i })), [tokens]);
-  const usedIdx = useMemo(() => {
-    // selected stores "token::idx" pairs to allow duplicates
-    return new Set(selected.map((s) => s.split("::")[1]));
-  }, [selected]);
-
+  const usedIdx = useMemo(() => new Set(selected.map((s) => s.split("::")[1])), [selected]);
   const display = (s: string) => s.split("::")[0];
-
   return (
     <div>
       <div className="min-h-24 p-3 mb-4 rounded-2xl border-2 border-dashed border-border bg-card flex flex-wrap gap-2">
         {selected.length === 0 && (
-          <span className="text-muted-foreground text-sm self-center">
-            Tap words below…
-          </span>
+          <span className="text-muted-foreground text-sm self-center">Tap words below…</span>
         )}
         {selected.map((s, i) => (
           <button
@@ -404,13 +469,13 @@ function WordBank({
   );
 }
 
-function CompleteView({ onDone }: { onDone: () => void }) {
+function CompleteScreen({ onDone, title }: { onDone: () => void; title: string }) {
   return (
     <div className="flex flex-col items-center justify-center text-center py-16 animate-fade-in">
       <div className="text-7xl mb-4 animate-[scale-in_0.4s_ease-out]">🎉</div>
-      <h2 className="text-3xl font-extrabold text-primary">Leçon terminée !</h2>
+      <h2 className="text-3xl font-extrabold text-primary">{title} done!</h2>
       <p className="text-muted-foreground mt-2">+10 XP earned. Streak bumped 🔥</p>
-      <NextButton onClick={onDone} label="Claim rewards" />
+      <NextBtn onClick={onDone} label="Claim rewards" />
     </div>
   );
 }

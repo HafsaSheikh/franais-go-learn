@@ -1,5 +1,6 @@
 // Re-exports + module generation from raw content.
 import { TAXI_UNITS } from "./taxi-content";
+import { TAXI_WORKBOOK } from "./taxi-workbook";
 
 export type Challenge =
   | { type: "multiple-choice"; question: string; options: string[]; correct: string }
@@ -162,9 +163,9 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
   const idPrefix = `${unitId}-${lessonId}`;
   const rand = rng(unitId * 100 + lessonId);
 
-  const vocab = raw.vocabulary as VocabPair[];
-  const phrases = raw.phrases as VocabPair[];
-  const grammar = raw.grammar as GrammarBlock[];
+  const vocab = [...raw.vocabulary] as VocabPair[];
+  const phrases = [...raw.phrases] as VocabPair[];
+  const grammar = raw.grammar.map((g) => ({ ...g, rules: [...g.rules] })) as GrammarBlock[];
 
   // VOCAB MODULE: flashcards + 5 quiz items
   const vocabQuiz: Challenge[] = [];
@@ -200,7 +201,7 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
     masteryQuiz.push(i % 2 === 0 ? phraseFillBlank(p) : phraseWordBank(p, phrases, rand)),
   );
 
-  return [
+  const modules: LessonModule[] = [
     {
       id: `${idPrefix}-dialogue`,
       unitId,
@@ -208,7 +209,7 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
       type: "dialogue",
       title: "Dialogue",
       icon: "💬",
-      dialogue: raw.dialogue as DialogueLine[],
+      dialogue: [...raw.dialogue] as DialogueLine[],
       culture: raw.culture,
     },
     {
@@ -251,6 +252,20 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
       exercises: shuffle(masteryQuiz, rand),
     },
   ];
+
+  const workbook = TAXI_WORKBOOK[`${unitId}-${lessonId}`];
+  if (workbook && workbook.length > 0) {
+    modules.push({
+      id: `${idPrefix}-workbook`,
+      unitId,
+      lessonId,
+      type: "quiz",
+      title: "Workbook practice",
+      icon: "📒",
+      exercises: workbook,
+    });
+  }
+  return modules;
 }
 
 export const UNITS: Unit[] = TAXI_UNITS.map((u) => ({

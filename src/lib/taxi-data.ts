@@ -4,7 +4,8 @@ import { TAXI_UNITS } from "./taxi-content";
 export type Challenge =
   | { type: "multiple-choice"; question: string; options: string[]; correct: string }
   | { type: "fill-blank"; question: string; blank: string }
-  | { type: "word-bank"; question: string; tokens: string[]; correctOrder: string[] };
+  | { type: "word-bank"; question: string; tokens: string[]; correctOrder: string[] }
+  | { type: "spelling"; question: string; answer: string; hint?: string };
 
 export interface DialogueLine { speaker: string; fr: string; en: string }
 export interface VocabPair { fr: string; en: string }
@@ -58,6 +59,16 @@ function pickDistractors<T>(pool: T[], exclude: T, n: number, rand: () => number
 
 function shuffle<T>(arr: T[], rand: () => number): T[] {
   return [...arr].sort(() => rand() - 0.5);
+}
+
+// Spelling challenge: prompt EN, user types FR
+function spellingChallenge(pair: VocabPair): Challenge {
+  return {
+    type: "spelling",
+    question: `Spell in French: "${pair.en}"`,
+    answer: pair.fr,
+    hint: pair.en,
+  };
 }
 
 // build vocab MC: show FR, pick EN translation
@@ -162,9 +173,9 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
   const idPrefix = `${unitId}-${lessonId}`;
   const rand = rng(unitId * 100 + lessonId);
 
-  const vocab = raw.vocabulary as VocabPair[];
-  const phrases = raw.phrases as VocabPair[];
-  const grammar = raw.grammar as GrammarBlock[];
+  const vocab = raw.vocabulary as unknown as VocabPair[];
+  const phrases = raw.phrases as unknown as VocabPair[];
+  const grammar = raw.grammar as unknown as GrammarBlock[];
 
   // VOCAB MODULE: flashcards + 5 quiz items
   const vocabQuiz: Challenge[] = [];
@@ -172,6 +183,10 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
   sampleV.forEach((p, i) =>
     vocabQuiz.push(i % 2 === 0 ? vocabMC(p, vocab, rand) : vocabReverseMC(p, vocab, rand)),
   );
+  // + 3 spelling drills
+  shuffle(vocab, rand)
+    .slice(0, 3)
+    .forEach((p) => vocabQuiz.push(spellingChallenge(p)));
 
   // GRAMMAR MODULE: lecture + auto MC from rules
   const grammarQuiz: Challenge[] = [];
@@ -199,6 +214,11 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
   mp.forEach((p, i) =>
     masteryQuiz.push(i % 2 === 0 ? phraseFillBlank(p) : phraseWordBank(p, phrases, rand)),
   );
+  // spice with 2 spelling
+  shuffle(vocab, rand).slice(0, 2).forEach((p) => masteryQuiz.push(spellingChallenge(p)));
+  // workbook-inspired extras for this lesson, if any
+  const extras = WORKBOOK_EXTRAS[`${unitId}-${lessonId}`] ?? [];
+  masteryQuiz.push(...extras);
 
   return [
     {
@@ -208,7 +228,7 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
       type: "dialogue",
       title: "Dialogue",
       icon: "💬",
-      dialogue: raw.dialogue as DialogueLine[],
+      dialogue: raw.dialogue as unknown as DialogueLine[],
       culture: raw.culture,
     },
     {
@@ -271,3 +291,123 @@ export const ALL_MODULES: LessonModule[] = UNITS.flatMap((u) =>
 // Legacy export (some old imports may exist)
 export const LE_NOUVEAU_TAXI_COMPLETE_DB = UNITS;
 export const ALL_LESSONS = UNITS.flatMap((u) => u.lessons);
+
+// Flat vocabulary list (used by the Vocabulary tab)
+export interface VocabEntry extends VocabPair {
+  unitId: number;
+  lessonId: number;
+  lessonTitle: string;
+}
+export const ALL_VOCAB: VocabEntry[] = UNITS.flatMap((u) =>
+  u.lessons.flatMap((l) => {
+    const vocabMod = l.modules.find((m) => m.type === "vocab");
+    return (vocabMod?.vocabulary ?? []).map((v) => ({
+      ...v,
+      unitId: u.unitId,
+      lessonId: l.lessonId,
+      lessonTitle: l.lessonTitle,
+    }));
+  }),
+);
+
+// Workbook-inspired extra challenges (Cahier d'exercices style) per lesson.
+// Adapted A1 drills — masculine/feminine, être/avoir, possessives, nationalities.
+const WORKBOOK_EXTRAS: Record<string, Challenge[]> = {
+  "1-1": [
+    {
+      type: "multiple-choice",
+      question: "Masculine form of 'française'?",
+      options: ["française", "français", "francaise", "francais"],
+      correct: "français",
+    },
+    {
+      type: "fill-blank",
+      question: "Il s'appelle Alberto. Il est ___ . (Italian)",
+      blank: "italien",
+    },
+    {
+      type: "multiple-choice",
+      question: "Choose the correct pronoun: ___ êtes monsieur Durand ?",
+      options: ["Tu", "Vous", "Je", "Il"],
+      correct: "Vous",
+    },
+    {
+      type: "word-bank",
+      question: "Arrange: 'My name is Pauline Latour.'",
+      tokens: ["Je", "m'appelle", "Pauline", "Latour", "vous", "suis"],
+      correctOrder: ["Je", "m'appelle", "Pauline", "Latour"],
+    },
+  ],
+  "1-2": [
+    {
+      type: "multiple-choice",
+      question: "Which word is the odd one out? (intrus)",
+      options: ["autrichienne", "polonaise", "japonaise", "assistante"],
+      correct: "assistante",
+    },
+    {
+      type: "fill-blank",
+      question: "___ professeur d'allemand est une femme. (le / la / l')",
+      blank: "Le",
+    },
+    {
+      type: "fill-blank",
+      question: "Tokyo est ___ Japon.",
+      blank: "au",
+    },
+    {
+      type: "multiple-choice",
+      question: "Masculine of 'la directrice commerciale' ?",
+      options: [
+        "le directeur commercial",
+        "le directrice commercial",
+        "la directeur commerciale",
+        "le directeur commerciale",
+      ],
+      correct: "le directeur commercial",
+    },
+  ],
+  "1-3": [
+    {
+      type: "fill-blank",
+      question: "Quel ___ as-tu ? — J'ai 24 ans.",
+      blank: "âge",
+    },
+    {
+      type: "multiple-choice",
+      question: "Anne ? Elle est dans ___ chambre.",
+      options: ["son", "sa", "ses", "mon"],
+      correct: "sa",
+    },
+    {
+      type: "fill-blank",
+      question: "Comment ___ Luis ? — Ça va. (aller)",
+      blank: "va",
+    },
+    {
+      type: "spelling",
+      question: "Write the number in letters: 23",
+      answer: "vingt-trois",
+      hint: "23",
+    },
+  ],
+  "1-4": [
+    {
+      type: "fill-blank",
+      question: "Add accents: J'habite a Berne en Suisse → J'habite ___ Berne en Suisse.",
+      blank: "à",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mon ___ est boulanger.",
+      options: ["père", "mère", "frère", "sœur"],
+      correct: "père",
+    },
+    {
+      type: "word-bank",
+      question: "Arrange: 'I'm looking for a pen pal.'",
+      tokens: ["Je", "cherche", "une", "un", "correspondante", "ami"],
+      correctOrder: ["Je", "cherche", "une", "correspondante"],
+    },
+  ],
+};

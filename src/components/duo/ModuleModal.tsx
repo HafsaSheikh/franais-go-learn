@@ -201,25 +201,29 @@ function VocabScreen({
   return (
     <div>
       <Header kicker="Vocabulary" title="Tap to flip" />
-      <p className="text-sm text-muted-foreground mb-4">
-        {pairs.length} words — tap a card to flip & hear it.
-      </p>
+      <p className="text-sm text-muted-foreground mb-4">{pairs.length} words to learn.</p>
       <div className="grid grid-cols-2 gap-3">
         {pairs.map((w, i) => {
           const f = flipped[i];
           return (
             <button
               key={i}
-              onClick={() => {
-                setFlipped((r) => ({ ...r, [i]: !r[i] }));
-                speak(w.fr);
-              }}
+              onClick={() => setFlipped((r) => ({ ...r, [i]: !r[i] }))}
               className={`relative aspect-square rounded-2xl border-2 p-3 flex flex-col items-center justify-center text-center transition-all shadow-[0_3px_0_var(--border)] active:translate-y-0.5 active:shadow-none ${
                 f ? "bg-accent border-accent text-accent-foreground" : "bg-card border-border"
               }`}
             >
               <p className="font-extrabold text-sm">{f ? w.en : w.fr}</p>
-              <span className="absolute top-2 right-2 text-xs opacity-60">🔊</span>
+              <span
+                role="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  speak(w.fr);
+                }}
+                className="absolute top-2 right-2 text-sm w-7 h-7 rounded-full bg-background/80 flex items-center justify-center"
+              >
+                🔊
+              </span>
             </button>
           );
         })}
@@ -313,9 +317,6 @@ function QuizScreen({
     } else if (challenge.type === "fill-blank") {
       ok = typeof answer === "string" && normalize(answer) === normalize(challenge.blank);
       correctStr = challenge.blank;
-    } else if (challenge.type === "spelling") {
-      ok = typeof answer === "string" && normalize(answer) === normalize(challenge.answer);
-      correctStr = challenge.answer;
     } else {
       const a = (answer as string[]).map((s) => s.split("::")[0]);
       ok =
@@ -360,26 +361,6 @@ function QuizScreen({
           placeholder="Type your answer…"
           className="w-full p-4 rounded-2xl border-2 border-border bg-card text-lg font-semibold focus:border-primary outline-none"
         />
-      )}
-
-      {challenge.type === "spelling" && (
-        <div className="space-y-3">
-          <button
-            type="button"
-            onClick={() => speak(challenge.answer)}
-            className="w-full p-4 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 font-bold text-primary flex items-center justify-center gap-2"
-          >
-            🔊 Play the word
-          </button>
-          <input
-            autoFocus
-            disabled={!!result}
-            value={answer as string}
-            onChange={(e) => setAnswer(e.target.value)}
-            placeholder="Type the French spelling…"
-            className="w-full p-4 rounded-2xl border-2 border-border bg-card text-lg font-semibold focus:border-primary outline-none"
-          />
-        </div>
       )}
 
       {challenge.type === "word-bank" && (

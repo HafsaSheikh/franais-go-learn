@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { UNITS, ALL_MODULES } from "@/lib/taxi-data";
 import { ModuleModal } from "@/components/duo/ModuleModal";
-import { VocabularyTab } from "@/components/duo/VocabularyTab";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,7 +22,6 @@ function Index() {
   const [completed, setCompleted] = useState<string[]>([]);
   const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
-  const [tab, setTab] = useState<"home" | "vocab">("home");
 
   const activeModule = ALL_MODULES.find((m) => m.id === activeModuleId) || null;
 
@@ -87,11 +85,7 @@ function Index() {
         </header>
 
         {/* Path */}
-        <main className="flex-1 overflow-y-auto pb-24">
-         {tab === "vocab" ? (
-          <VocabularyTab />
-         ) : (
-          <div className="px-4 py-6">
+        <main className="flex-1 overflow-y-auto px-4 py-6">
           {UNITS.map((unit) => (
             <section key={unit.unitId} className="mb-10">
               {/* Unit banner */}
@@ -163,28 +157,7 @@ function Index() {
           <div className="text-center text-muted-foreground text-xs pt-4 pb-8">
             🎓 Inspired by <em>Le Nouveau Taxi 1</em> — Units 1–3
           </div>
-          </div>
-         )}
         </main>
-
-        {/* Bottom nav */}
-        <nav className="absolute bottom-0 inset-x-0 z-10 bg-background border-t border-border flex">
-          {[
-            { id: "home" as const, label: "Home", icon: "🏠" },
-            { id: "vocab" as const, label: "Vocabulary", icon: "📖" },
-          ].map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={`flex-1 flex flex-col items-center justify-center py-3 font-bold text-xs transition-colors ${
-                tab === t.id ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <span className="text-xl leading-none mb-1">{t.icon}</span>
-              {t.label}
-            </button>
-          ))}
-        </nav>
 
         {activeModule && (
           <ModuleModal

@@ -201,29 +201,25 @@ function VocabScreen({
   return (
     <div>
       <Header kicker="Vocabulary" title="Tap to flip" />
-      <p className="text-sm text-muted-foreground mb-4">{pairs.length} words to learn.</p>
+      <p className="text-sm text-muted-foreground mb-4">
+        {pairs.length} words — tap a card to flip & hear it.
+      </p>
       <div className="grid grid-cols-2 gap-3">
         {pairs.map((w, i) => {
           const f = flipped[i];
           return (
             <button
               key={i}
-              onClick={() => setFlipped((r) => ({ ...r, [i]: !r[i] }))}
+              onClick={() => {
+                setFlipped((r) => ({ ...r, [i]: !r[i] }));
+                speak(w.fr);
+              }}
               className={`relative aspect-square rounded-2xl border-2 p-3 flex flex-col items-center justify-center text-center transition-all shadow-[0_3px_0_var(--border)] active:translate-y-0.5 active:shadow-none ${
                 f ? "bg-accent border-accent text-accent-foreground" : "bg-card border-border"
               }`}
             >
               <p className="font-extrabold text-sm">{f ? w.en : w.fr}</p>
-              <span
-                role="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  speak(w.fr);
-                }}
-                className="absolute top-2 right-2 text-sm w-7 h-7 rounded-full bg-background/80 flex items-center justify-center"
-              >
-                🔊
-              </span>
+              <span className="absolute top-2 right-2 text-xs opacity-60">🔊</span>
             </button>
           );
         })}

@@ -201,7 +201,7 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
     masteryQuiz.push(i % 2 === 0 ? phraseFillBlank(p) : phraseWordBank(p, phrases, rand)),
   );
 
-  return [
+  const modules: LessonModule[] = [
     {
       id: `${idPrefix}-dialogue`,
       unitId,
@@ -252,6 +252,20 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
       exercises: shuffle(masteryQuiz, rand),
     },
   ];
+
+  const workbook = TAXI_WORKBOOK[`${unitId}-${lessonId}`];
+  if (workbook && workbook.length > 0) {
+    modules.push({
+      id: `${idPrefix}-workbook`,
+      unitId,
+      lessonId,
+      type: "quiz",
+      title: "Workbook practice",
+      icon: "📒",
+      exercises: workbook,
+    });
+  }
+  return modules;
 }
 
 export const UNITS: Unit[] = TAXI_UNITS.map((u) => ({

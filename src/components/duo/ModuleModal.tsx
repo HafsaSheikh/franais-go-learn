@@ -317,6 +317,9 @@ function QuizScreen({
     } else if (challenge.type === "fill-blank") {
       ok = typeof answer === "string" && normalize(answer) === normalize(challenge.blank);
       correctStr = challenge.blank;
+    } else if (challenge.type === "spelling") {
+      ok = typeof answer === "string" && normalize(answer) === normalize(challenge.answer);
+      correctStr = challenge.answer;
     } else {
       const a = (answer as string[]).map((s) => s.split("::")[0]);
       ok =
@@ -361,6 +364,26 @@ function QuizScreen({
           placeholder="Type your answer…"
           className="w-full p-4 rounded-2xl border-2 border-border bg-card text-lg font-semibold focus:border-primary outline-none"
         />
+      )}
+
+      {challenge.type === "spelling" && (
+        <div className="space-y-3">
+          <button
+            type="button"
+            onClick={() => speak(challenge.answer)}
+            className="w-full p-4 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 font-bold text-primary flex items-center justify-center gap-2"
+          >
+            🔊 Play the word
+          </button>
+          <input
+            autoFocus
+            disabled={!!result}
+            value={answer as string}
+            onChange={(e) => setAnswer(e.target.value)}
+            placeholder="Type the French spelling…"
+            className="w-full p-4 rounded-2xl border-2 border-border bg-card text-lg font-semibold focus:border-primary outline-none"
+          />
+        </div>
       )}
 
       {challenge.type === "word-bank" && (

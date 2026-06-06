@@ -525,4 +525,343 @@ export const TAXI_WORKBOOK: Record<string, Challenge[]> = {
       correctOrder: ["Prenez", "la", "première", "rue", "à", "droite"],
     },
   ],
+  "2-5": [
+    {
+      type: "multiple-choice",
+      question: "Find the intruder:",
+      options: ["un vase", "des fleurs", "une chaise", "un fauteuil"],
+      correct: "des fleurs",
+    },
+    {
+      type: "fill-blank",
+      question: "Complete: 'Sur la table, il y a ___ vase et un verre.'",
+      blank: "un",
+    },
+    {
+      type: "multiple-choice",
+      question: "Choose the correct article: '___ photos sont dans la chambre.'",
+      options: ["Des", "Les", "Une", "Le"],
+      correct: "Les",
+    },
+    {
+      type: "fill-blank",
+      question: "Preposition: 'Le chat est ___ le fauteuil.'",
+      blank: "sur",
+    },
+    {
+      type: "multiple-choice",
+      question: "Choose the best sentence:",
+      options: [
+        "Il y a une table et des chaises.",
+        "Il y a une table et des voitures.",
+        "Il y a des chaussures et des chaises.",
+        "Il y a des fleurs et des maisons.",
+      ],
+      correct: "Il y a une table et des chaises.",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'Qu'est-ce que c'est ? C'est un vase.'",
+      tokens: ["Qu'est-ce", "que", "c'est", "?", "C'est", "un", "vase", "."],
+      correctOrder: ["Qu'est-ce", "que", "c'est", "?", "C'est", "un", "vase", "."],
+    },
+  ],
+
+  "2-6": [
+    {
+      type: "multiple-choice",
+      question: "Find the intruder:",
+      options: ["un manteau", "un portrait", "une chemise", "un pull-over"],
+      correct: "un portrait",
+    },
+    {
+      type: "multiple-choice",
+      question: "Negative form of 'Il porte des lunettes.'",
+      options: [
+        "Il ne porte pas de lunettes.",
+        "Il ne porte pas des lunettes.",
+        "Il porte pas de lunettes.",
+        "Il ne porte des lunettes pas.",
+      ],
+      correct: "Il ne porte pas de lunettes.",
+    },
+    {
+      type: "fill-blank",
+      question: "Stressed pronoun: '___ , je suis grand.'",
+      blank: "Moi",
+    },
+    {
+      type: "fill-blank",
+      question: "Agreement: 'Elle a une robe ___.' (green)",
+      blank: "verte",
+    },
+    {
+      type: "multiple-choice",
+      question: "Plural of 'un tee-shirt blanc' is…",
+      options: [
+        "des tee-shirts blancs",
+        "des tee-shirt blanc",
+        "des tee-shirts blanc",
+        "les tee-shirt blanches",
+      ],
+      correct: "des tee-shirts blancs",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'Elle est petite, brune et elle porte des lunettes.'",
+      tokens: ["Elle", "est", "petite", "brune", "et", "elle", "porte", "des", "lunettes"],
+      correctOrder: ["Elle", "est", "petite", "brune", "et", "elle", "porte", "des", "lunettes"],
+    },
+  ],
+
+  "2-7": [
+    {
+      type: "multiple-choice",
+      question: "Choose the correct demonstrative: '___ pull noir'",
+      options: ["ce", "cet", "cette", "ces"],
+      correct: "ce",
+    },
+    {
+      type: "multiple-choice",
+      question: "Choose the correct demonstrative: '___ objet rouge'",
+      options: ["ce", "cet", "cette", "ces"],
+      correct: "cet",
+    },
+    {
+      type: "fill-blank",
+      question: "Question word: '___ coûte ce blouson ?'",
+      blank: "Combien",
+    },
+    {
+      type: "fill-blank",
+      question: "Write the number: 'quatre-vingt-treize' = ___",
+      blank: "93",
+    },
+    {
+      type: "multiple-choice",
+      question: "Complete the negative: 'Je ___ porte ___ de chaussures jaunes.'",
+      options: ["ne / pas", "n' / pas", "ne / plus", "n' / plus"],
+      correct: "ne / pas",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'Quels vêtements est-ce que tu aimes ?'",
+      tokens: ["Quels", "vêtements", "est-ce", "que", "tu", "aimes", "?"],
+      correctOrder: ["Quels", "vêtements", "est-ce", "que", "tu", "aimes", "?"],
+    },
+  ],
+
+  "2-8": [
+    {
+      type: "multiple-choice",
+      question: "Transform: 'Les chaussures sont à elle.' →",
+      options: [
+        "Ce sont ses chaussures.",
+        "Ce sont ses chaussures à elle.",
+        "C'est ses chaussures.",
+        "Elle a les chaussures.",
+      ],
+      correct: "Ce sont ses chaussures.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Transform: 'Les sacs sont à Pierre et à Paul.' →",
+      options: [
+        "Ce sont leurs sacs.",
+        "Ce sont ses sacs.",
+        "C'est leurs sacs.",
+        "Ils ont les sacs.",
+      ],
+      correct: "Ce sont leurs sacs.",
+    },
+    {
+      type: "fill-blank",
+      question: "Transform: 'Les vestes sont à lui.' →",
+      blank: "Ce sont ses vestes.",
+    },
+    {
+      type: "fill-blank",
+      question: "Transform: 'Les lunettes sont à vous.' →",
+      blank: "Ce sont vos lunettes.",
+    },
+    {
+      type: "fill-blank",
+      question: "Transform: 'Les chemises sont à toi.' →",
+      blank: "Ce sont tes chemises.",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'The coats are his.'",
+      tokens: ["Ce", "sont", "ses", "vestes", "à", "lui"],
+      correctOrder: ["Ce", "sont", "ses", "vestes", "à", "lui"],
+    },
+  ],
+
+  "3-9": [
+    {
+      type: "multiple-choice",
+      question: "Find the intruder:",
+      options: ["ascenseur", "chambre", "couloir", "voiture"],
+      correct: "voiture",
+    },
+    {
+      type: "fill-blank",
+      question: "Complete: 'La chambre est ___ bout du couloir.'",
+      blank: "au",
+    },
+    {
+      type: "fill-blank",
+      question: "Complete: 'La cuisine se trouve ___ droite de l'entrée.'",
+      blank: "à",
+    },
+    {
+      type: "multiple-choice",
+      question: "Which phrase means 'at the corner'?",
+      options: ["au coin", "au bout", "à droite", "dans"],
+      correct: "au coin",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'L'immeuble est au coin de la rue.'",
+      tokens: ["L'immeuble", "est", "au", "coin", "de", "la", "rue"],
+      correctOrder: ["L'immeuble", "est", "au", "coin", "de", "la", "rue"],
+    },
+    {
+      type: "multiple-choice",
+      question: "Which floor is 'le rez-de-chaussée' ?",
+      options: ["ground floor", "first floor", "top floor", "basement"],
+      correct: "ground floor",
+    },
+  ],
+
+  "3-10": [
+    {
+      type: "multiple-choice",
+      question: "Find the intruder:",
+      options: ["musée", "banque", "magasin", "voiture"],
+      correct: "voiture",
+    },
+    {
+      type: "multiple-choice",
+      question: "Which sentence uses the imperative?",
+      options: [
+        "Continuez tout droit.",
+        "Vous continuez tout droit.",
+        "Tu continues tout droit.",
+        "Il continue tout droit.",
+      ],
+      correct: "Continuez tout droit.",
+    },
+    {
+      type: "fill-blank",
+      question: "Use the pronoun 'y': 'Tu vas à la banque ? — Oui, j' ___ vais.'",
+      blank: "y",
+    },
+    {
+      type: "fill-blank",
+      question: "Contracted article: 'Ils vont ___ musée.' (à + le)",
+      blank: "au",
+    },
+    {
+      type: "multiple-choice",
+      question: "How do you say 'by bus' ?",
+      options: ["en bus", "à bus", "au bus", "de bus"],
+      correct: "en bus",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'Tu passes devant la poste? — Oui, j'y passe.'",
+      tokens: ["Tu", "passes", "devant", "la", "poste", "?", "Oui", "j'", "y", "passe", "."],
+      correctOrder: ["Tu", "passes", "devant", "la", "poste", "?", "Oui", "j'", "y", "passe", "."],
+    },
+  ],
+
+  "3-11": [
+    {
+      type: "multiple-choice",
+      question: "What is La Réunion?",
+      options: ["une île", "une ville", "un pays", "un fleuve"],
+      correct: "une île",
+    },
+    {
+      type: "fill-blank",
+      question: "Complete: 'Le premier jour, vous arrivez à l'___ de Saint-Denis.'",
+      blank: "aéroport",
+    },
+    {
+      type: "fill-blank",
+      question: "Complete: 'On visite le centre de l'île ___ hélicoptère.'",
+      blank: "en",
+    },
+    {
+      type: "multiple-choice",
+      question: "Choose the correct phrase: 'L'hôtel est ___ bord de la mer.'",
+      options: ["au", "en", "à la", "à"],
+      correct: "au",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'Cette grande île a de jolies plages.'",
+      tokens: ["Cette", "grande", "île", "a", "de", "jolies", "plages"],
+      correctOrder: ["Cette", "grande", "île", "a", "de", "jolies", "plages"],
+    },
+    {
+      type: "multiple-choice",
+      question: "Choose the correct transformation: 'Cette grande île a de jolies plages.' →",
+      options: [
+        "C'est une grande île avec de jolies plages.",
+        "C'est une jolie plage avec de grandes îles.",
+        "Cette île grande a de plages jolies.",
+        "Une grande île c'est avec jolies plages.",
+      ],
+      correct: "C'est une grande île avec de jolies plages.",
+    },
+  ],
+
+  "3-12": [
+    {
+      type: "multiple-choice",
+      question: "Choose the correct direction word: 'Continuez tout droit et ___ à gauche.'",
+      options: ["tournez", "allez", "venez", "prenez"],
+      correct: "tournez",
+    },
+    {
+      type: "fill-blank",
+      question: "Complete: 'La gare est sur la droite, entre la rue de la Mer et la rue de ___.'",
+      blank: "Vienne",
+    },
+    {
+      type: "fill-blank",
+      question: "Complete: 'C'est au coin de la rue de Vienne et de la place ___.'",
+      blank: "d'Italie",
+    },
+    {
+      type: "multiple-choice",
+      question: "Which sentence describes the office of tourism?",
+      options: [
+        "C'est au coin de la rue de Vienne et de la place d'Italie.",
+        "Il est en face de la poste.",
+        "Elle est à gauche du musée.",
+        "C'est à droite du pont.",
+      ],
+      correct: "C'est au coin de la rue de Vienne et de la place d'Italie.",
+    },
+    {
+      type: "word-bank",
+      question: "Translate: 'La gare est sur la droite, entre la rue de la Mer et la rue de Vienne.'",
+      tokens: ["La", "gare", "est", "sur", "la", "droite", ",", "entre", "la", "rue", "de", "la", "Mer", "et", "la", "rue", "de", "Vienne"],
+      correctOrder: ["La", "gare", "est", "sur", "la", "droite", ",", "entre", "la", "rue", "de", "la", "Mer", "et", "la", "rue", "de", "Vienne"],
+    },
+    {
+      type: "multiple-choice",
+      question: "What is the best answer if someone asks 'Tu y vas comment ?'",
+      options: [
+        "J'y vais en voiture.",
+        "J'en vais en voiture.",
+        "Je vais y en voiture.",
+        "J'y suis voiture.",
+      ],
+      correct: "J'y vais en voiture.",
+    },
+  ],
 };

@@ -173,9 +173,9 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
   const idPrefix = `${unitId}-${lessonId}`;
   const rand = rng(unitId * 100 + lessonId);
 
-  const vocab = raw.vocabulary as VocabPair[];
-  const phrases = raw.phrases as VocabPair[];
-  const grammar = raw.grammar as GrammarBlock[];
+  const vocab = raw.vocabulary as unknown as VocabPair[];
+  const phrases = raw.phrases as unknown as VocabPair[];
+  const grammar = raw.grammar as unknown as GrammarBlock[];
 
   // VOCAB MODULE: flashcards + 5 quiz items
   const vocabQuiz: Challenge[] = [];
@@ -228,7 +228,7 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
       type: "dialogue",
       title: "Dialogue",
       icon: "💬",
-      dialogue: raw.dialogue as DialogueLine[],
+      dialogue: raw.dialogue as unknown as DialogueLine[],
       culture: raw.culture,
     },
     {

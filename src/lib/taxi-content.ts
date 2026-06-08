@@ -130,6 +130,34 @@ export const TAXI_UNITS = [
           {
             "fr": "non",
             "en": "no"
+          },
+          {
+            "fr": "s'appeler",
+            "en": "to be called / one's name is"
+          },
+          {
+            "fr": "être",
+            "en": "to be"
+          },
+          {
+            "fr": "un club",
+            "en": "a club"
+          },
+          {
+            "fr": "un homme",
+            "en": "a man"
+          },
+          {
+            "fr": "maman",
+            "en": "mum / mom"
+          },
+          {
+            "fr": "une question",
+            "en": "a question"
+          },
+          {
+            "fr": "un voisin / une voisine",
+            "en": "a neighbour"
           }
         ],
         "grammar": [
@@ -329,6 +357,42 @@ export const TAXI_UNITS = [
           {
             "fr": "un bureau",
             "en": "an office"
+          },
+          {
+            "fr": "allemand",
+            "en": "German"
+          },
+          {
+            "fr": "un badge",
+            "en": "a badge"
+          },
+          {
+            "fr": "un café",
+            "en": "a coffee"
+          },
+          {
+            "fr": "une carte de visite",
+            "en": "a business card"
+          },
+          {
+            "fr": "chinois",
+            "en": "Chinese"
+          },
+          {
+            "fr": "et",
+            "en": "and"
+          },
+          {
+            "fr": "pendant",
+            "en": "during"
+          },
+          {
+            "fr": "un thé",
+            "en": "a tea"
+          },
+          {
+            "fr": "un serveur / une serveuse",
+            "en": "a waiter / waitress"
           }
         ],
         "grammar": [
@@ -535,6 +599,58 @@ export const TAXI_UNITS = [
           {
             "fr": "salut",
             "en": "hi / bye"
+          },
+          {
+            "fr": "alors",
+            "en": "then / so"
+          },
+          {
+            "fr": "au revoir",
+            "en": "goodbye"
+          },
+          {
+            "fr": "un bébé",
+            "en": "a baby"
+          },
+          {
+            "fr": "bonne journée",
+            "en": "have a good day"
+          },
+          {
+            "fr": "bonne nuit",
+            "en": "good night"
+          },
+          {
+            "fr": "une chambre",
+            "en": "a room / bedroom"
+          },
+          {
+            "fr": "une clé",
+            "en": "a key"
+          },
+          {
+            "fr": "un garçon",
+            "en": "a boy"
+          },
+          {
+            "fr": "un hôtel",
+            "en": "a hotel"
+          },
+          {
+            "fr": "pardon",
+            "en": "excuse me / sorry"
+          },
+          {
+            "fr": "une profession",
+            "en": "a profession / job"
+          },
+          {
+            "fr": "bien",
+            "en": "well"
+          },
+          {
+            "fr": "un téléphone",
+            "en": "a telephone"
           }
         ],
         "grammar": [
@@ -751,6 +867,38 @@ export const TAXI_UNITS = [
           {
             "fr": "québécois",
             "en": "from Quebec"
+          },
+          {
+            "fr": "le golf",
+            "en": "golf"
+          },
+          {
+            "fr": "guyanais",
+            "en": "Guyanese"
+          },
+          {
+            "fr": "ivoirien",
+            "en": "Ivorian"
+          },
+          {
+            "fr": "la littérature",
+            "en": "literature"
+          },
+          {
+            "fr": "le volley-ball",
+            "en": "volleyball"
+          },
+          {
+            "fr": "un boulanger / une boulangère",
+            "en": "a baker"
+          },
+          {
+            "fr": "une photo",
+            "en": "a photo"
+          },
+          {
+            "fr": "souvent",
+            "en": "often"
           }
         ],
         "grammar": [
@@ -976,6 +1124,26 @@ export const TAXI_UNITS = [
           {
             "fr": "derrière",
             "en": "behind"
+          },
+          {
+            "fr": "bravo",
+            "en": "well done!"
+          },
+          {
+            "fr": "un chat / une chatte",
+            "en": "a cat"
+          },
+          {
+            "fr": "une fleur",
+            "en": "a flower"
+          },
+          {
+            "fr": "il y a",
+            "en": "there is / there are"
+          },
+          {
+            "fr": "un objet",
+            "en": "an object"
           }
         ],
         "grammar": [
@@ -1198,6 +1366,34 @@ export const TAXI_UNITS = [
           {
             "fr": "porter",
             "en": "to wear"
+          },
+          {
+            "fr": "autre",
+            "en": "other"
+          },
+          {
+            "fr": "une chose",
+            "en": "a thing"
+          },
+          {
+            "fr": "une couleur",
+            "en": "a colour"
+          },
+          {
+            "fr": "d'accord",
+            "en": "okay / agreed"
+          },
+          {
+            "fr": "une personne",
+            "en": "a person"
+          },
+          {
+            "fr": "un portrait",
+            "en": "a portrait"
+          },
+          {
+            "fr": "un vêtement",
+            "en": "an item of clothing"
           }
         ],
         "grammar": [
@@ -1427,6 +1623,22 @@ export const TAXI_UNITS = [
           {
             "fr": "une fille",
             "en": "a girl"
+          },
+          {
+            "fr": "un bon de commande",
+            "en": "an order form"
+          },
+          {
+            "fr": "une quantité",
+            "en": "a quantity"
+          },
+          {
+            "fr": "très",
+            "en": "very"
+          },
+          {
+            "fr": "un type",
+            "en": "a type / guy"
           }
         ],
         "grammar": [
@@ -1638,6 +1850,14 @@ export const TAXI_UNITS = [
           {
             "fr": "la vie",
             "en": "life"
+          },
+          {
+            "fr": "un coin",
+            "en": "a corner"
+          },
+          {
+            "fr": "un lit",
+            "en": "a bed"
           }
         ],
         "grammar": [
@@ -1855,6 +2075,30 @@ export const TAXI_UNITS = [
           {
             "fr": "un mètre carré",
             "en": "a square metre"
+          },
+          {
+            "fr": "avec",
+            "en": "with"
+          },
+          {
+            "fr": "chez",
+            "en": "at someone's home"
+          },
+          {
+            "fr": "là-bas",
+            "en": "over there"
+          },
+          {
+            "fr": "meilleures salutations",
+            "en": "best wishes"
+          },
+          {
+            "fr": "un mois",
+            "en": "a month"
+          },
+          {
+            "fr": "où",
+            "en": "where"
           }
         ],
         "grammar": [
@@ -2080,6 +2324,50 @@ export const TAXI_UNITS = [
           {
             "fr": "continuer",
             "en": "to continue"
+          },
+          {
+            "fr": "ah bon ?",
+            "en": "really? / oh really?"
+          },
+          {
+            "fr": "après",
+            "en": "after"
+          },
+          {
+            "fr": "arriver",
+            "en": "to arrive"
+          },
+          {
+            "fr": "bien sûr",
+            "en": "of course"
+          },
+          {
+            "fr": "direct",
+            "en": "direct"
+          },
+          {
+            "fr": "ensuite",
+            "en": "then / next"
+          },
+          {
+            "fr": "entrer",
+            "en": "to enter"
+          },
+          {
+            "fr": "un jardin",
+            "en": "a garden"
+          },
+          {
+            "fr": "loin",
+            "en": "far"
+          },
+          {
+            "fr": "un pont",
+            "en": "a bridge"
+          },
+          {
+            "fr": "prendre",
+            "en": "to take"
           }
         ],
         "grammar": [
@@ -2296,6 +2584,34 @@ export const TAXI_UNITS = [
           {
             "fr": "sympa",
             "en": "nice"
+          },
+          {
+            "fr": "un conseil",
+            "en": "a piece of advice"
+          },
+          {
+            "fr": "un jour",
+            "en": "a day"
+          },
+          {
+            "fr": "juste",
+            "en": "just / exactly"
+          },
+          {
+            "fr": "puis",
+            "en": "then"
+          },
+          {
+            "fr": "une télévision",
+            "en": "a television"
+          },
+          {
+            "fr": "une ville",
+            "en": "a town / city"
+          },
+          {
+            "fr": "voilà",
+            "en": "there you are / here"
           }
         ],
         "grammar": [
@@ -2515,6 +2831,26 @@ export const TAXI_UNITS = [
           {
             "fr": "quatrième",
             "en": "fourth"
+          },
+          {
+            "fr": "un aquarium",
+            "en": "an aquarium"
+          },
+          {
+            "fr": "un billet",
+            "en": "a ticket"
+          },
+          {
+            "fr": "une bise",
+            "en": "a kiss (greeting)"
+          },
+          {
+            "fr": "une destination",
+            "en": "a destination"
+          },
+          {
+            "fr": "l'hôtel de ville",
+            "en": "the town hall"
           }
         ],
         "grammar": [

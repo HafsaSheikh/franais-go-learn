@@ -2923,4 +2923,1023 @@ export const TAXI_UNITS = [
       }
     ]
   }
+,
+  {
+    "unitId": 4,
+    "unitTitle": "Goûts et achats",
+    "lessons": [
+      {
+        "lessonId": 13,
+        "lessonTitle": "J'adore !",
+        "theme": "Expressing likes and dislikes; talking about leisure and tastes",
+        "dialogue": [
+          {
+            "speaker": "Léa",
+            "fr": "Tu aimes le cinéma ?",
+            "en": "Do you like cinema?"
+          },
+          {
+            "speaker": "Marc",
+            "fr": "Oui, j'adore le cinéma, surtout les films français.",
+            "en": "Yes, I love cinema, especially French films."
+          },
+          {
+            "speaker": "Léa",
+            "fr": "Et la musique ? Tu aimes le jazz ?",
+            "en": "And music? Do you like jazz?"
+          },
+          {
+            "speaker": "Marc",
+            "fr": "Non, je n'aime pas le jazz. Je préfère le rock.",
+            "en": "No, I don't like jazz. I prefer rock."
+          },
+          {
+            "speaker": "Léa",
+            "fr": "Moi, j'aime bien le jazz mais je déteste l'opéra.",
+            "en": "I quite like jazz but I hate opera."
+          },
+          {
+            "speaker": "Marc",
+            "fr": "Qu'est-ce que tu fais le week-end ?",
+            "en": "What do you do on weekends?"
+          },
+          {
+            "speaker": "Léa",
+            "fr": "Je fais du sport et je lis beaucoup.",
+            "en": "I play sports and I read a lot."
+          },
+          {
+            "speaker": "Marc",
+            "fr": "Moi aussi, j'aime lire. Mon livre préféré, c'est Le Petit Prince.",
+            "en": "Me too, I love reading. My favourite book is The Little Prince."
+          }
+        ],
+        "vocabulary": [
+          {
+            "fr": "aimer",
+            "en": "to like"
+          },
+          {
+            "fr": "adorer",
+            "en": "to love / adore"
+          },
+          {
+            "fr": "détester",
+            "en": "to hate"
+          },
+          {
+            "fr": "préférer",
+            "en": "to prefer"
+          },
+          {
+            "fr": "aimer bien",
+            "en": "to quite like"
+          },
+          {
+            "fr": "le cinéma",
+            "en": "cinema"
+          },
+          {
+            "fr": "la musique",
+            "en": "music"
+          },
+          {
+            "fr": "le sport",
+            "en": "sport"
+          },
+          {
+            "fr": "la lecture",
+            "en": "reading"
+          },
+          {
+            "fr": "la danse",
+            "en": "dance"
+          },
+          {
+            "fr": "le théâtre",
+            "en": "theatre"
+          },
+          {
+            "fr": "l'opéra",
+            "en": "opera"
+          },
+          {
+            "fr": "le jazz",
+            "en": "jazz"
+          },
+          {
+            "fr": "le rock",
+            "en": "rock"
+          },
+          {
+            "fr": "la peinture",
+            "en": "painting"
+          },
+          {
+            "fr": "un film",
+            "en": "a film"
+          },
+          {
+            "fr": "un livre",
+            "en": "a book"
+          },
+          {
+            "fr": "une chanson",
+            "en": "a song"
+          },
+          {
+            "fr": "préféré",
+            "en": "favourite"
+          },
+          {
+            "fr": "surtout",
+            "en": "especially"
+          },
+          {
+            "fr": "beaucoup",
+            "en": "a lot"
+          },
+          {
+            "fr": "un peu",
+            "en": "a little"
+          },
+          {
+            "fr": "pas du tout",
+            "en": "not at all"
+          },
+          {
+            "fr": "le week-end",
+            "en": "the weekend"
+          },
+          {
+            "fr": "faire du sport",
+            "en": "to play sport"
+          },
+          {
+            "fr": "lire",
+            "en": "to read"
+          },
+          {
+            "fr": "écouter",
+            "en": "to listen"
+          },
+          {
+            "fr": "regarder",
+            "en": "to watch"
+          }
+        ],
+        "grammar": [
+          {
+            "title": "Les articles définis avec les goûts",
+            "explanation": "After aimer / adorer / détester / préférer, use the definite article (le, la, l', les) before nouns.",
+            "rules": [
+              "J'aime le cinéma.",
+              "Je déteste la musique classique.",
+              "J'adore les films français.",
+              "Elle préfère l'opéra."
+            ]
+          },
+          {
+            "title": "La négation (ne... pas)",
+            "explanation": "Place ne before the verb and pas after; ne becomes n' before a vowel.",
+            "rules": [
+              "Je n'aime pas le jazz.",
+              "Il ne regarde pas la télévision.",
+              "Nous n'écoutons pas la radio.",
+              "Elle ne danse pas."
+            ]
+          },
+          {
+            "title": "Verbes en -er (présent)",
+            "explanation": "Regular -er verbs: stem + e/es/e/ons/ez/ent.",
+            "rules": [
+              "j'aime, tu aimes, il/elle aime",
+              "nous aimons, vous aimez, ils/elles aiment",
+              "j'écoute → nous écoutons",
+              "je préfère → nous préférons (accent change)"
+            ]
+          }
+        ],
+        "phrases": [
+          {
+            "fr": "J'adore le cinéma.",
+            "en": "I love cinema."
+          },
+          {
+            "fr": "Je n'aime pas le jazz.",
+            "en": "I don't like jazz."
+          },
+          {
+            "fr": "Je préfère le rock.",
+            "en": "I prefer rock."
+          },
+          {
+            "fr": "Qu'est-ce que tu fais le week-end ?",
+            "en": "What do you do on weekends?"
+          },
+          {
+            "fr": "Mon film préféré, c'est Amélie.",
+            "en": "My favourite film is Amélie."
+          },
+          {
+            "fr": "Je fais du sport tous les jours.",
+            "en": "I play sport every day."
+          },
+          {
+            "fr": "Elle aime beaucoup la lecture.",
+            "en": "She really likes reading."
+          },
+          {
+            "fr": "Nous adorons les films français.",
+            "en": "We love French films."
+          }
+        ],
+        "culture": "French people love cinema — France invented it (Lumière brothers, 1895) and still produces around 300 films a year. The Cannes Film Festival is the world's most prestigious."
+      },
+      {
+        "lessonId": 14,
+        "lessonTitle": "Tournée générale !",
+        "theme": "At the café; ordering food and drinks; partitive articles",
+        "dialogue": [
+          {
+            "speaker": "Serveur",
+            "fr": "Bonjour ! Vous désirez ?",
+            "en": "Hello! What would you like?"
+          },
+          {
+            "speaker": "Paul",
+            "fr": "Pour moi, un café, s'il vous plaît.",
+            "en": "A coffee for me, please."
+          },
+          {
+            "speaker": "Sophie",
+            "fr": "Moi, je prends un thé au citron.",
+            "en": "I'll have a tea with lemon."
+          },
+          {
+            "speaker": "Marc",
+            "fr": "Je voudrais un jus d'orange et un croissant.",
+            "en": "I'd like an orange juice and a croissant."
+          },
+          {
+            "speaker": "Serveur",
+            "fr": "Très bien. Vous mangez quelque chose ?",
+            "en": "Very well. Are you eating something?"
+          },
+          {
+            "speaker": "Paul",
+            "fr": "Oui, un sandwich au jambon, s'il vous plaît.",
+            "en": "Yes, a ham sandwich, please."
+          },
+          {
+            "speaker": "Serveur",
+            "fr": "Et comme dessert ?",
+            "en": "And for dessert?"
+          },
+          {
+            "speaker": "Sophie",
+            "fr": "Une tarte aux pommes pour moi.",
+            "en": "An apple tart for me."
+          },
+          {
+            "speaker": "Marc",
+            "fr": "L'addition, s'il vous plaît !",
+            "en": "The bill, please!"
+          },
+          {
+            "speaker": "Serveur",
+            "fr": "Ça fait 18 euros 50.",
+            "en": "That's 18 euros 50."
+          }
+        ],
+        "vocabulary": [
+          {
+            "fr": "un café",
+            "en": "a coffee"
+          },
+          {
+            "fr": "un thé",
+            "en": "a tea"
+          },
+          {
+            "fr": "un chocolat chaud",
+            "en": "a hot chocolate"
+          },
+          {
+            "fr": "un jus d'orange",
+            "en": "an orange juice"
+          },
+          {
+            "fr": "une eau minérale",
+            "en": "a mineral water"
+          },
+          {
+            "fr": "un demi",
+            "en": "a half-pint of beer"
+          },
+          {
+            "fr": "un verre de vin",
+            "en": "a glass of wine"
+          },
+          {
+            "fr": "un croissant",
+            "en": "a croissant"
+          },
+          {
+            "fr": "un sandwich",
+            "en": "a sandwich"
+          },
+          {
+            "fr": "le jambon",
+            "en": "ham"
+          },
+          {
+            "fr": "le fromage",
+            "en": "cheese"
+          },
+          {
+            "fr": "une tarte",
+            "en": "a tart"
+          },
+          {
+            "fr": "une pomme",
+            "en": "an apple"
+          },
+          {
+            "fr": "un gâteau",
+            "en": "a cake"
+          },
+          {
+            "fr": "le sucre",
+            "en": "sugar"
+          },
+          {
+            "fr": "le lait",
+            "en": "milk"
+          },
+          {
+            "fr": "le citron",
+            "en": "lemon"
+          },
+          {
+            "fr": "l'addition",
+            "en": "the bill"
+          },
+          {
+            "fr": "un serveur",
+            "en": "a waiter"
+          },
+          {
+            "fr": "une serveuse",
+            "en": "a waitress"
+          },
+          {
+            "fr": "le menu",
+            "en": "the menu"
+          },
+          {
+            "fr": "un dessert",
+            "en": "a dessert"
+          },
+          {
+            "fr": "manger",
+            "en": "to eat"
+          },
+          {
+            "fr": "boire",
+            "en": "to drink"
+          },
+          {
+            "fr": "prendre",
+            "en": "to take / have"
+          },
+          {
+            "fr": "désirer",
+            "en": "to wish / want"
+          },
+          {
+            "fr": "Vous désirez ?",
+            "en": "What would you like?"
+          },
+          {
+            "fr": "Je voudrais",
+            "en": "I would like"
+          },
+          {
+            "fr": "s'il vous plaît",
+            "en": "please"
+          }
+        ],
+        "grammar": [
+          {
+            "title": "L'article partitif (du, de la, de l', des)",
+            "explanation": "Use du/de la/de l'/des for unspecified quantities of food and drink.",
+            "rules": [
+              "Je prends du café. (masc.)",
+              "Je voudrais de la tarte. (fém.)",
+              "Il boit de l'eau. (voyelle)",
+              "Vous mangez des croissants. (pluriel)"
+            ]
+          },
+          {
+            "title": "Le verbe prendre",
+            "explanation": "Irregular: je prends, tu prends, il/elle prend, nous prenons, vous prenez, ils/elles prennent.",
+            "rules": [
+              "Je prends un café.",
+              "Tu prends quoi ?",
+              "Nous prenons l'addition.",
+              "Ils prennent des desserts."
+            ]
+          },
+          {
+            "title": "Sandwich au / à la / aux",
+            "explanation": "Composition: au (m), à la (f), à l' (vowel), aux (pl).",
+            "rules": [
+              "un sandwich au jambon",
+              "une tarte à la fraise",
+              "une glace à l'orange",
+              "une tarte aux pommes"
+            ]
+          }
+        ],
+        "phrases": [
+          {
+            "fr": "Vous désirez ?",
+            "en": "What would you like?"
+          },
+          {
+            "fr": "Je voudrais un café, s'il vous plaît.",
+            "en": "I'd like a coffee, please."
+          },
+          {
+            "fr": "Pour moi, un thé au citron.",
+            "en": "A lemon tea for me."
+          },
+          {
+            "fr": "L'addition, s'il vous plaît !",
+            "en": "The bill, please!"
+          },
+          {
+            "fr": "Ça fait combien ?",
+            "en": "How much is that?"
+          },
+          {
+            "fr": "Je prends une tarte aux pommes.",
+            "en": "I'll have an apple tart."
+          },
+          {
+            "fr": "C'est ma tournée !",
+            "en": "It's my round!"
+          },
+          {
+            "fr": "Santé !",
+            "en": "Cheers!"
+          }
+        ],
+        "culture": "Le café is a French institution — a place to read, work, meet friends. Coffee is usually served as an espresso ('un café'). To order American-style coffee, ask for 'un café allongé'."
+      },
+      {
+        "lessonId": 15,
+        "lessonTitle": "On fait des p'tits cadeaux",
+        "theme": "Shopping for gifts; demonstrative adjectives; colours and clothes",
+        "dialogue": [
+          {
+            "speaker": "Vendeuse",
+            "fr": "Bonjour, je peux vous aider ?",
+            "en": "Hello, can I help you?"
+          },
+          {
+            "speaker": "Claire",
+            "fr": "Oui, je cherche un cadeau pour ma mère.",
+            "en": "Yes, I'm looking for a gift for my mother."
+          },
+          {
+            "speaker": "Vendeuse",
+            "fr": "Regardez ce foulard, il est très joli.",
+            "en": "Look at this scarf, it's very pretty."
+          },
+          {
+            "speaker": "Claire",
+            "fr": "Il coûte combien ?",
+            "en": "How much does it cost?"
+          },
+          {
+            "speaker": "Vendeuse",
+            "fr": "45 euros. Cette couleur est très à la mode.",
+            "en": "45 euros. This colour is very fashionable."
+          },
+          {
+            "speaker": "Claire",
+            "fr": "Vous avez ce modèle en bleu ?",
+            "en": "Do you have this model in blue?"
+          },
+          {
+            "speaker": "Vendeuse",
+            "fr": "Oui, en bleu, en rouge et en vert.",
+            "en": "Yes, in blue, red, and green."
+          },
+          {
+            "speaker": "Claire",
+            "fr": "Je prends le bleu. Vous acceptez la carte ?",
+            "en": "I'll take the blue one. Do you accept cards?"
+          },
+          {
+            "speaker": "Vendeuse",
+            "fr": "Bien sûr. Voilà votre ticket.",
+            "en": "Of course. Here's your receipt."
+          }
+        ],
+        "vocabulary": [
+          {
+            "fr": "un cadeau",
+            "en": "a gift"
+          },
+          {
+            "fr": "un magasin",
+            "en": "a shop"
+          },
+          {
+            "fr": "un vendeur",
+            "en": "a salesman"
+          },
+          {
+            "fr": "une vendeuse",
+            "en": "a saleswoman"
+          },
+          {
+            "fr": "un client",
+            "en": "a customer"
+          },
+          {
+            "fr": "acheter",
+            "en": "to buy"
+          },
+          {
+            "fr": "vendre",
+            "en": "to sell"
+          },
+          {
+            "fr": "coûter",
+            "en": "to cost"
+          },
+          {
+            "fr": "payer",
+            "en": "to pay"
+          },
+          {
+            "fr": "chercher",
+            "en": "to look for"
+          },
+          {
+            "fr": "essayer",
+            "en": "to try on"
+          },
+          {
+            "fr": "un foulard",
+            "en": "a scarf"
+          },
+          {
+            "fr": "une chemise",
+            "en": "a shirt"
+          },
+          {
+            "fr": "un pantalon",
+            "en": "trousers"
+          },
+          {
+            "fr": "une robe",
+            "en": "a dress"
+          },
+          {
+            "fr": "une jupe",
+            "en": "a skirt"
+          },
+          {
+            "fr": "un pull",
+            "en": "a sweater"
+          },
+          {
+            "fr": "une veste",
+            "en": "a jacket"
+          },
+          {
+            "fr": "des chaussures",
+            "en": "shoes"
+          },
+          {
+            "fr": "un sac",
+            "en": "a bag"
+          },
+          {
+            "fr": "bleu",
+            "en": "blue"
+          },
+          {
+            "fr": "rouge",
+            "en": "red"
+          },
+          {
+            "fr": "vert",
+            "en": "green"
+          },
+          {
+            "fr": "jaune",
+            "en": "yellow"
+          },
+          {
+            "fr": "noir",
+            "en": "black"
+          },
+          {
+            "fr": "blanc",
+            "en": "white"
+          },
+          {
+            "fr": "rose",
+            "en": "pink"
+          },
+          {
+            "fr": "violet",
+            "en": "purple"
+          },
+          {
+            "fr": "gris",
+            "en": "grey"
+          },
+          {
+            "fr": "marron",
+            "en": "brown"
+          },
+          {
+            "fr": "joli",
+            "en": "pretty"
+          },
+          {
+            "fr": "cher",
+            "en": "expensive"
+          },
+          {
+            "fr": "bon marché",
+            "en": "cheap"
+          },
+          {
+            "fr": "à la mode",
+            "en": "fashionable"
+          },
+          {
+            "fr": "la taille",
+            "en": "the size"
+          },
+          {
+            "fr": "la carte bancaire",
+            "en": "the credit card"
+          },
+          {
+            "fr": "en espèces",
+            "en": "in cash"
+          },
+          {
+            "fr": "un ticket",
+            "en": "a receipt"
+          }
+        ],
+        "grammar": [
+          {
+            "title": "Les adjectifs démonstratifs",
+            "explanation": "ce (m), cet (m. before vowel), cette (f), ces (pl).",
+            "rules": [
+              "ce foulard (m.)",
+              "cet ami (m. voyelle)",
+              "cette robe (f.)",
+              "ces chaussures (pluriel)"
+            ]
+          },
+          {
+            "title": "Accord des adjectifs de couleur",
+            "explanation": "Most colours agree in gender and number. Marron and orange are invariable.",
+            "rules": [
+              "un pull bleu / une robe bleue",
+              "un pantalon noir / une jupe noire",
+              "des chaussures vertes",
+              "des chaussures marron (invariable)"
+            ]
+          },
+          {
+            "title": "Combien / Quel / Quelle",
+            "explanation": "Question words for shopping.",
+            "rules": [
+              "Combien ça coûte ? = How much?",
+              "Quel est le prix ?",
+              "Quelle taille ? / Quelle couleur ?",
+              "Vous avez quelle taille ?"
+            ]
+          }
+        ],
+        "phrases": [
+          {
+            "fr": "Je peux vous aider ?",
+            "en": "Can I help you?"
+          },
+          {
+            "fr": "Je cherche un cadeau.",
+            "en": "I'm looking for a gift."
+          },
+          {
+            "fr": "Il coûte combien ?",
+            "en": "How much does it cost?"
+          },
+          {
+            "fr": "Ça fait combien ?",
+            "en": "How much does that come to?"
+          },
+          {
+            "fr": "Vous l'avez en bleu ?",
+            "en": "Do you have it in blue?"
+          },
+          {
+            "fr": "Je peux l'essayer ?",
+            "en": "Can I try it on?"
+          },
+          {
+            "fr": "Vous acceptez la carte bancaire ?",
+            "en": "Do you accept credit cards?"
+          },
+          {
+            "fr": "Je prends celui-ci.",
+            "en": "I'll take this one."
+          }
+        ],
+        "culture": "French gift-giving etiquette: when invited to a French home, bring flowers (not chrysanthemums — they're for funerals), good chocolates, or a fine bottle of wine. Avoid red roses (romantic) and white lilies (funerals)."
+      },
+      {
+        "lessonId": 16,
+        "lessonTitle": "Au marché",
+        "theme": "Food shopping at the market; expressing quantities",
+        "dialogue": [
+          {
+            "speaker": "Marchand",
+            "fr": "Bonjour madame, qu'est-ce que je vous sers ?",
+            "en": "Hello madam, what can I get you?"
+          },
+          {
+            "speaker": "Cliente",
+            "fr": "Je voudrais un kilo de tomates, s'il vous plaît.",
+            "en": "I'd like a kilo of tomatoes, please."
+          },
+          {
+            "speaker": "Marchand",
+            "fr": "Et avec ceci ?",
+            "en": "Anything else?"
+          },
+          {
+            "speaker": "Cliente",
+            "fr": "Une livre de fraises et un melon bien mûr.",
+            "en": "Half a kilo of strawberries and a ripe melon."
+          },
+          {
+            "speaker": "Marchand",
+            "fr": "Voilà. Il vous faut autre chose ?",
+            "en": "Here you go. Do you need anything else?"
+          },
+          {
+            "speaker": "Cliente",
+            "fr": "Oui, donnez-moi aussi 200 grammes de champignons.",
+            "en": "Yes, also give me 200 grams of mushrooms."
+          },
+          {
+            "speaker": "Marchand",
+            "fr": "Ça sera tout ?",
+            "en": "Will that be all?"
+          },
+          {
+            "speaker": "Cliente",
+            "fr": "Oui, ça sera tout. Je vous dois combien ?",
+            "en": "Yes, that's all. How much do I owe you?"
+          },
+          {
+            "speaker": "Marchand",
+            "fr": "12 euros 80, s'il vous plaît.",
+            "en": "12 euros 80, please."
+          }
+        ],
+        "vocabulary": [
+          {
+            "fr": "le marché",
+            "en": "the market"
+          },
+          {
+            "fr": "un marchand",
+            "en": "a vendor"
+          },
+          {
+            "fr": "une cliente",
+            "en": "a (female) customer"
+          },
+          {
+            "fr": "un kilo",
+            "en": "a kilo"
+          },
+          {
+            "fr": "une livre",
+            "en": "a pound (half-kilo)"
+          },
+          {
+            "fr": "un gramme",
+            "en": "a gram"
+          },
+          {
+            "fr": "un litre",
+            "en": "a litre"
+          },
+          {
+            "fr": "une bouteille",
+            "en": "a bottle"
+          },
+          {
+            "fr": "un paquet",
+            "en": "a packet"
+          },
+          {
+            "fr": "une boîte",
+            "en": "a box / can"
+          },
+          {
+            "fr": "une tranche",
+            "en": "a slice"
+          },
+          {
+            "fr": "une douzaine",
+            "en": "a dozen"
+          },
+          {
+            "fr": "une tomate",
+            "en": "a tomato"
+          },
+          {
+            "fr": "une pomme",
+            "en": "an apple"
+          },
+          {
+            "fr": "une banane",
+            "en": "a banana"
+          },
+          {
+            "fr": "une orange",
+            "en": "an orange"
+          },
+          {
+            "fr": "une fraise",
+            "en": "a strawberry"
+          },
+          {
+            "fr": "un melon",
+            "en": "a melon"
+          },
+          {
+            "fr": "une carotte",
+            "en": "a carrot"
+          },
+          {
+            "fr": "une salade",
+            "en": "a lettuce"
+          },
+          {
+            "fr": "un champignon",
+            "en": "a mushroom"
+          },
+          {
+            "fr": "des pommes de terre",
+            "en": "potatoes"
+          },
+          {
+            "fr": "des haricots verts",
+            "en": "green beans"
+          },
+          {
+            "fr": "le pain",
+            "en": "bread"
+          },
+          {
+            "fr": "la viande",
+            "en": "meat"
+          },
+          {
+            "fr": "le poisson",
+            "en": "fish"
+          },
+          {
+            "fr": "le poulet",
+            "en": "chicken"
+          },
+          {
+            "fr": "les œufs",
+            "en": "eggs"
+          },
+          {
+            "fr": "le beurre",
+            "en": "butter"
+          },
+          {
+            "fr": "mûr",
+            "en": "ripe"
+          },
+          {
+            "fr": "frais",
+            "en": "fresh"
+          },
+          {
+            "fr": "bon",
+            "en": "good"
+          },
+          {
+            "fr": "trop",
+            "en": "too much"
+          },
+          {
+            "fr": "assez",
+            "en": "enough"
+          },
+          {
+            "fr": "peu",
+            "en": "little"
+          },
+          {
+            "fr": "Et avec ceci ?",
+            "en": "Anything else?"
+          },
+          {
+            "fr": "Ça sera tout.",
+            "en": "That will be all."
+          }
+        ],
+        "grammar": [
+          {
+            "title": "Les expressions de quantité",
+            "explanation": "Use 'de' (no article) after quantity words: un kilo de, beaucoup de, un peu de.",
+            "rules": [
+              "un kilo de tomates",
+              "une bouteille d'eau",
+              "beaucoup de fruits",
+              "un peu de sucre"
+            ]
+          },
+          {
+            "title": "Partitif vs quantité précise",
+            "explanation": "Use du/de la/des for unspecified, but only 'de' after a precise quantity.",
+            "rules": [
+              "Je voudrais du fromage. (some)",
+              "Je voudrais 200 g de fromage. (precise)",
+              "Il boit de l'eau. (some)",
+              "Il boit un litre d'eau."
+            ]
+          },
+          {
+            "title": "L'impératif pour demander",
+            "explanation": "Use the imperative politely at the market with 'Donnez-moi', 'Mettez-moi'.",
+            "rules": [
+              "Donnez-moi un kilo de pommes.",
+              "Mettez-moi deux baguettes.",
+              "Ajoutez une salade, s'il vous plaît.",
+              "Servez-moi 300 g de jambon."
+            ]
+          }
+        ],
+        "phrases": [
+          {
+            "fr": "Qu'est-ce que je vous sers ?",
+            "en": "What can I get you?"
+          },
+          {
+            "fr": "Je voudrais un kilo de tomates.",
+            "en": "I'd like a kilo of tomatoes."
+          },
+          {
+            "fr": "Et avec ceci ?",
+            "en": "Anything else?"
+          },
+          {
+            "fr": "Ça sera tout, merci.",
+            "en": "That'll be all, thanks."
+          },
+          {
+            "fr": "Je vous dois combien ?",
+            "en": "How much do I owe you?"
+          },
+          {
+            "fr": "Donnez-moi une livre de fraises.",
+            "en": "Give me half a kilo of strawberries."
+          },
+          {
+            "fr": "C'est bien mûr ?",
+            "en": "Is it nice and ripe?"
+          },
+          {
+            "fr": "Mettez-moi aussi une baguette.",
+            "en": "Add a baguette as well."
+          }
+        ],
+        "culture": "Open-air markets ('marchés') happen 1-3 times per week in nearly every French town. They're prized for fresh local produce. Marché de Rungis, near Paris, is the world's largest wholesale fresh-food market."
+      }
+    ]
+  }
 ] as const;

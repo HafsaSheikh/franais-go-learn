@@ -68,7 +68,7 @@ export function ModuleModal({ module, hearts, onClose, onLoseHeart, onComplete }
             <DialogueScreen lines={current.lines} culture={current.culture} onNext={advance} />
           )}
           {current.kind === "vocab" && (
-            <VocabScreen pairs={current.pairs} onNext={advance} />
+            <VocabScreen moduleId={module.id} pairs={current.pairs} onNext={advance} />
           )}
           {current.kind === "grammar" && (
             <GrammarScreen blocks={current.blocks} onNext={advance} />
@@ -191,27 +191,99 @@ function DialogueScreen({
 }
 
 function VocabScreen({
+  moduleId,
   pairs,
   onNext,
 }: {
+  moduleId: string;
   pairs: NonNullable<LessonModule["vocabulary"]>;
   onNext: () => void;
 }) {
+  const storageKey = `taxi:custom-vocab:${moduleId}`;
+  const [custom, setCustom] = useState<{ fr: string; en: string }[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      return JSON.parse(localStorage.getItem(storageKey) || "[]");
+    } catch {
+      return [];
+    }
+  });
+  const [adding, setAdding] = useState(false);
+  const [fr, setFr] = useState("");
+  const [en, setEn] = useState("");
+  const allPairs = useMemo(() => [...pairs, ...custom], [pairs, custom]);
+
+  const save = (next: { fr: string; en: string }[]) => {
+    setCustom(next);
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(next));
+    } catch {}
+  };
+  const addWord = () => {
+    const f = fr.trim();
+    const e = en.trim();
+    if (!f || !e) return;
+    save([...custom, { fr: f.slice(0, 60), en: e.slice(0, 80) }]);
+    setFr("");
+    setEn("");
+    setAdding(false);
+  };
+  const removeCustom = (i: number) => save(custom.filter((_, j) => j !== i));
+
   const [flipped, setFlipped] = useState<Record<number, boolean>>({});
   return (
     <div>
       <Header kicker="Vocabulary" title="Tap to flip" />
-      <p className="text-sm text-muted-foreground mb-4">{pairs.length} words to learn.</p>
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-sm text-muted-foreground">
+          {allPairs.length} words{custom.length > 0 ? ` (${custom.length} yours)` : ""}.
+        </p>
+        <button
+          onClick={() => setAdding((a) => !a)}
+          className="text-xs font-bold uppercase tracking-wide px-3 py-1.5 rounded-full bg-primary text-primary-foreground shadow-[0_2px_0_var(--primary-shadow)] active:translate-y-0.5 active:shadow-none"
+        >
+          {adding ? "Cancel" : "+ Add word"}
+        </button>
+      </div>
+      {adding && (
+        <div className="mb-4 p-3 bg-accent/30 border-2 border-accent rounded-2xl space-y-2 animate-fade-in">
+          <input
+            autoFocus
+            value={fr}
+            onChange={(e) => setFr(e.target.value)}
+            placeholder="French word (e.g. bonjour)"
+            maxLength={60}
+            className="w-full p-2 rounded-xl border-2 border-border bg-card text-sm font-semibold focus:border-primary outline-none"
+          />
+          <input
+            value={en}
+            onChange={(e) => setEn(e.target.value)}
+            placeholder="English translation"
+            maxLength={80}
+            onKeyDown={(e) => e.key === "Enter" && addWord()}
+            className="w-full p-2 rounded-xl border-2 border-border bg-card text-sm font-semibold focus:border-primary outline-none"
+          />
+          <button
+            onClick={addWord}
+            disabled={!fr.trim() || !en.trim()}
+            className="w-full py-2 rounded-xl bg-primary text-primary-foreground font-bold uppercase text-xs tracking-wide disabled:opacity-40"
+          >
+            Save word
+          </button>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-3">
-        {pairs.map((w, i) => {
+        {allPairs.map((w, i) => {
           const f = flipped[i];
+          const isCustom = i >= pairs.length;
+          const customIdx = i - pairs.length;
           return (
             <button
               key={i}
               onClick={() => setFlipped((r) => ({ ...r, [i]: !r[i] }))}
               className={`relative aspect-square rounded-2xl border-2 p-3 flex flex-col items-center justify-center text-center transition-all shadow-[0_3px_0_var(--border)] active:translate-y-0.5 active:shadow-none ${
                 f ? "bg-accent border-accent text-accent-foreground" : "bg-card border-border"
-              }`}
+              } ${isCustom ? "ring-2 ring-primary/40" : ""}`}
             >
               <p className="font-extrabold text-sm">{f ? w.en : w.fr}</p>
               <span
@@ -224,6 +296,19 @@ function VocabScreen({
               >
                 🔊
               </span>
+              {isCustom && (
+                <span
+                  role="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeCustom(customIdx);
+                  }}
+                  className="absolute top-2 left-2 text-xs w-6 h-6 rounded-full bg-destructive/80 text-destructive-foreground flex items-center justify-center"
+                  title="Remove"
+                >
+                  ✕
+                </span>
+              )}
             </button>
           );
         })}

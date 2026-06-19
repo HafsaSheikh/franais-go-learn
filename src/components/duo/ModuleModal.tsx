@@ -77,6 +77,9 @@ export function ModuleModal({ module, hearts, onClose, onLoseHeart, onComplete }
           {current.kind === "phrases" && (
             <PhrasesScreen pairs={current.pairs} onNext={advance} />
           )}
+          {current.kind === "gender" && (
+            <GenderScreen pairs={current.pairs} onNext={advance} />
+          )}
           {current.kind === "quiz" && (
             <QuizScreen
               key={idx}

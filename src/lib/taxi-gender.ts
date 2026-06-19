@@ -50,7 +50,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "sympathique", f: "sympathique", en: "friendly", kind: "adj" },
   ],
   // ============ UNIT 2 ============
-  "2-1": [
+  "2-5": [
     { m: "un livre", f: "une table", en: "a book / a table", kind: "noun" },
     { m: "un stylo", f: "une trousse", en: "a pen / a pencil case", kind: "noun" },
     { m: "un sac", f: "une valise", en: "a bag / a suitcase", kind: "noun" },
@@ -60,7 +60,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "blanc", f: "blanche", en: "white", kind: "adj" },
     { m: "bleu", f: "bleue", en: "blue", kind: "adj" },
   ],
-  "2-2": [
+  "2-6": [
     { m: "un homme", f: "une femme", en: "a man / a woman", kind: "noun" },
     { m: "un garçon", f: "une fille", en: "a boy / a girl", kind: "noun" },
     { m: "grand", f: "grande", en: "tall / big", kind: "adj" },
@@ -72,7 +72,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "jeune", f: "jeune", en: "young (same form)", kind: "adj" },
     { m: "sportif", f: "sportive", en: "athletic", kind: "adj" },
   ],
-  "2-3": [
+  "2-7": [
     { m: "un vendeur", f: "une vendeuse", en: "a salesperson", kind: "noun" },
     { m: "un client", f: "une cliente", en: "a customer", kind: "noun" },
     { m: "un pull", f: "une chemise", en: "a sweater / a shirt", kind: "noun" },
@@ -82,7 +82,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "joli", f: "jolie", en: "pretty", kind: "adj" },
     { m: "nouveau", f: "nouvelle", en: "new", kind: "adj" },
   ],
-  "2-4": [
+  "2-8": [
     { m: "un peintre", f: "une peintre", en: "a painter", kind: "noun" },
     { m: "un sculpteur", f: "une sculptrice", en: "a sculptor", kind: "noun" },
     { m: "un artiste", f: "une artiste", en: "an artist", kind: "noun" },
@@ -93,7 +93,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "original", f: "originale", en: "original", kind: "adj" },
   ],
   // ============ UNIT 3 ============
-  "3-1": [
+  "3-9": [
     { m: "un appartement", f: "une maison", en: "an apartment / a house", kind: "noun" },
     { m: "un salon", f: "une cuisine", en: "a living room / a kitchen", kind: "noun" },
     { m: "un balcon", f: "une terrasse", en: "a balcony / a terrace", kind: "noun" },
@@ -103,7 +103,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "spacieux", f: "spacieuse", en: "spacious", kind: "adj" },
     { m: "moderne", f: "moderne", en: "modern", kind: "adj" },
   ],
-  "3-2": [
+  "3-10": [
     { m: "un boulevard", f: "une avenue", en: "a boulevard / an avenue", kind: "noun" },
     { m: "un pont", f: "une rue", en: "a bridge / a street", kind: "noun" },
     { m: "un musée", f: "une église", en: "a museum / a church", kind: "noun" },
@@ -113,7 +113,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "dernier", f: "dernière", en: "last", kind: "adj" },
     { m: "loin", f: "loin", en: "far (adverb)", kind: "adj" },
   ],
-  "3-3": [
+  "3-11": [
     { m: "un voyageur", f: "une voyageuse", en: "a traveller", kind: "noun" },
     { m: "un passager", f: "une passagère", en: "a passenger", kind: "noun" },
     { m: "un billet", f: "une carte", en: "a ticket / a card", kind: "noun" },
@@ -123,7 +123,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "long", f: "longue", en: "long", kind: "adj" },
     { m: "prêt", f: "prête", en: "ready", kind: "adj" },
   ],
-  "3-4": [
+  "3-12": [
     { m: "un quartier", f: "une ville", en: "a neighbourhood / a city", kind: "noun" },
     { m: "un port", f: "une plage", en: "a port / a beach", kind: "noun" },
     { m: "un marché", f: "une place", en: "a market / a square", kind: "noun" },
@@ -134,7 +134,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "calme", f: "calme", en: "calm / quiet", kind: "adj" },
   ],
   // ============ UNIT 4 ============
-  "4-1": [
+  "4-13": [
     { m: "un film", f: "une chanson", en: "a film / a song", kind: "noun" },
     { m: "un acteur", f: "une actrice", en: "an actor", kind: "noun" },
     { m: "un chanteur", f: "une chanteuse", en: "a singer", kind: "noun" },
@@ -144,7 +144,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "ennuyeux", f: "ennuyeuse", en: "boring", kind: "adj" },
     { m: "drôle", f: "drôle", en: "funny", kind: "adj" },
   ],
-  "4-2": [
+  "4-14": [
     { m: "un café", f: "une bière", en: "a coffee / a beer", kind: "noun" },
     { m: "un thé", f: "une eau (minérale)", en: "a tea / a (mineral) water", kind: "noun" },
     { m: "un jus", f: "une limonade", en: "a juice / a lemonade", kind: "noun" },
@@ -154,7 +154,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "chaud", f: "chaude", en: "hot", kind: "adj" },
     { m: "sucré", f: "sucrée", en: "sweet / sugary", kind: "adj" },
   ],
-  "4-3": [
+  "4-15": [
     { m: "un cadeau", f: "une carte", en: "a gift / a card", kind: "noun" },
     { m: "un parfum", f: "une fleur", en: "a perfume / a flower", kind: "noun" },
     { m: "un bijou", f: "une bague", en: "a piece of jewellery / a ring", kind: "noun" },
@@ -164,7 +164,7 @@ export const TAXI_GENDER: Record<string, GenderPair[]> = {
     { m: "violet", f: "violette", en: "purple", kind: "adj" },
     { m: "doux", f: "douce", en: "soft / sweet", kind: "adj" },
   ],
-  "4-4": [
+  "4-16": [
     { m: "un fruit", f: "une pomme", en: "a fruit / an apple", kind: "noun" },
     { m: "un légume", f: "une tomate", en: "a vegetable / a tomato", kind: "noun" },
     { m: "un melon", f: "une fraise", en: "a melon / a strawberry", kind: "noun" },

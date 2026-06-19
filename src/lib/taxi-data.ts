@@ -1,6 +1,7 @@
 // Re-exports + module generation from raw content.
 import { TAXI_UNITS } from "./taxi-content";
 import { TAXI_WORKBOOK } from "./taxi-workbook";
+import { TAXI_GENDER, type GenderPair } from "./taxi-gender";
 
 export type Challenge =
   | { type: "multiple-choice"; question: string; options: string[]; correct: string }
@@ -11,7 +12,7 @@ export interface DialogueLine { speaker: string; fr: string; en: string }
 export interface VocabPair { fr: string; en: string }
 export interface GrammarBlock { title: string; explanation: string; rules: string[] }
 
-export type ModuleType = "dialogue" | "vocab" | "grammar" | "phrases" | "quiz";
+export type ModuleType = "dialogue" | "vocab" | "grammar" | "phrases" | "quiz" | "gender";
 
 export interface LessonModule {
   id: string;            // e.g. "1-1-vocab"
@@ -27,6 +28,7 @@ export interface LessonModule {
   phrases?: VocabPair[];
   culture?: string;
   exercises?: Challenge[];
+  genderPairs?: GenderPair[];
 }
 
 export interface Lesson {
@@ -263,6 +265,37 @@ function buildModules(unitId: number, raw: RawLesson): LessonModule[] {
       title: "Workbook practice",
       icon: "📒",
       exercises: workbook,
+    });
+  }
+
+  const genderPairs = TAXI_GENDER[`${unitId}-${lessonId}`];
+  if (genderPairs && genderPairs.length > 0) {
+    // build a small MC quiz: given masculine, pick feminine
+    const genderQuiz: Challenge[] = [];
+    const fems = genderPairs.map((p) => p.f);
+    shuffle(genderPairs, rand)
+      .slice(0, Math.min(5, genderPairs.length))
+      .forEach((p) => {
+        const distractors = pickDistractors(fems, p.f, 3, rand);
+        // ensure unique options
+        const opts = shuffle(Array.from(new Set([p.f, ...distractors])).slice(0, 4), rand);
+        if (opts.length < 2) return;
+        genderQuiz.push({
+          type: "multiple-choice",
+          question: `What is the feminine of "${p.m}"?`,
+          options: opts,
+          correct: p.f,
+        });
+      });
+    modules.push({
+      id: `${idPrefix}-gender`,
+      unitId,
+      lessonId,
+      type: "gender",
+      title: "Masculine ↔ Feminine",
+      icon: "⚥",
+      genderPairs,
+      exercises: genderQuiz,
     });
   }
   return modules;

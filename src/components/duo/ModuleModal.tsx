@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Challenge, LessonModule } from "@/lib/taxi-data";
+import type { GenderPair } from "@/lib/taxi-gender";
 
 function speak(text: string) {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
@@ -76,6 +77,9 @@ export function ModuleModal({ module, hearts, onClose, onLoseHeart, onComplete }
           {current.kind === "phrases" && (
             <PhrasesScreen pairs={current.pairs} onNext={advance} />
           )}
+          {current.kind === "gender" && (
+            <GenderScreen pairs={current.pairs} onNext={advance} />
+          )}
           {current.kind === "quiz" && (
             <QuizScreen
               key={idx}
@@ -97,6 +101,7 @@ type Screen =
   | { kind: "vocab"; pairs: NonNullable<LessonModule["vocabulary"]> }
   | { kind: "grammar"; blocks: NonNullable<LessonModule["grammar"]> }
   | { kind: "phrases"; pairs: NonNullable<LessonModule["phrases"]> }
+  | { kind: "gender"; pairs: GenderPair[] }
   | { kind: "quiz"; challenge: Challenge }
   | { kind: "complete" };
 
@@ -113,6 +118,9 @@ function buildScreens(m: LessonModule): Screen[] {
   }
   if (m.type === "phrases" && m.phrases) {
     s.push({ kind: "phrases", pairs: m.phrases });
+  }
+  if (m.type === "gender" && m.genderPairs) {
+    s.push({ kind: "gender", pairs: m.genderPairs });
   }
   if (m.exercises && m.exercises.length > 0) {
     m.exercises.forEach((c) => s.push({ kind: "quiz", challenge: c }));
@@ -561,6 +569,75 @@ function CompleteScreen({ onDone, title }: { onDone: () => void; title: string }
       <h2 className="text-3xl font-extrabold text-primary">{title} done!</h2>
       <p className="text-muted-foreground mt-2">+10 XP earned. Streak bumped 🔥</p>
       <NextBtn onClick={onDone} label="Claim rewards" />
+    </div>
+  );
+}
+
+function GenderScreen({
+  pairs,
+  onNext,
+}: {
+  pairs: GenderPair[];
+  onNext: () => void;
+}) {
+  const [flipped, setFlipped] = useState<Record<number, boolean>>({});
+  return (
+    <div>
+      <Header kicker="Gender" title="Masculine ↔ Feminine" />
+      <p className="text-sm text-muted-foreground mb-4">
+        Tap a card to flip between <span className="font-bold text-primary">le masculin</span> and{" "}
+        <span className="font-bold" style={{ color: "hsl(330 80% 55%)" }}>la féminin</span>. 🔊 plays the French.
+      </p>
+      <div className="space-y-3">
+        {pairs.map((p, i) => {
+          const showFem = flipped[i];
+          const word = showFem ? p.f : p.m;
+          return (
+            <button
+              key={i}
+              onClick={() => setFlipped((r) => ({ ...r, [i]: !r[i] }))}
+              className={`w-full text-left rounded-2xl border-2 p-4 transition-all shadow-[0_3px_0_var(--border)] active:translate-y-0.5 active:shadow-none ${
+                showFem
+                  ? "border-pink-300 bg-pink-50 dark:bg-pink-950/30"
+                  : "border-sky-300 bg-sky-50 dark:bg-sky-950/30"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span
+                      className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                        showFem ? "bg-pink-500 text-white" : "bg-sky-500 text-white"
+                      }`}
+                    >
+                      {showFem ? "Féminin ♀" : "Masculin ♂"}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
+                      {p.kind === "noun" ? "Noun" : "Adjective"}
+                    </span>
+                  </div>
+                  <p className="font-extrabold text-lg text-foreground">{word}</p>
+                  <p className="text-xs text-muted-foreground italic mt-0.5">{p.en}</p>
+                  <p className="text-[11px] text-muted-foreground/80 mt-1">
+                    ↔ {showFem ? p.m : p.f}
+                  </p>
+                </div>
+                <span
+                  role="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    speak(word);
+                  }}
+                  className="text-lg w-10 h-10 rounded-full bg-background/80 border border-border flex items-center justify-center shrink-0"
+                >
+                  🔊
+                </span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      <NextBtn onClick={onNext} label="Start practice" />
     </div>
   );
 }

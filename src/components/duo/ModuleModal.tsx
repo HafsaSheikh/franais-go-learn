@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Challenge, LessonModule } from "@/lib/taxi-data";
+import type { GenderPair } from "@/lib/taxi-gender";
 
 function speak(text: string) {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
@@ -97,6 +98,7 @@ type Screen =
   | { kind: "vocab"; pairs: NonNullable<LessonModule["vocabulary"]> }
   | { kind: "grammar"; blocks: NonNullable<LessonModule["grammar"]> }
   | { kind: "phrases"; pairs: NonNullable<LessonModule["phrases"]> }
+  | { kind: "gender"; pairs: GenderPair[] }
   | { kind: "quiz"; challenge: Challenge }
   | { kind: "complete" };
 
@@ -113,6 +115,9 @@ function buildScreens(m: LessonModule): Screen[] {
   }
   if (m.type === "phrases" && m.phrases) {
     s.push({ kind: "phrases", pairs: m.phrases });
+  }
+  if (m.type === "gender" && m.genderPairs) {
+    s.push({ kind: "gender", pairs: m.genderPairs });
   }
   if (m.exercises && m.exercises.length > 0) {
     m.exercises.forEach((c) => s.push({ kind: "quiz", challenge: c }));
